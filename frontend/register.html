@@ -1,99 +1,378 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Register — College CP</title>
   <meta name="description" content="Create a new College CP account.">
-  <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-<div class="auth-page">
-  <div class="auth-card">
 
-    <div class="auth-brand">
-      <div class="auth-brand-icon">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="16 18 22 12 16 6"/>
-          <polyline points="8 6 2 12 8 18"/>
-        </svg>
-      </div>
-      <h1>Join College CP</h1>
-      <p>Create your competitive programming account</p>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;display=swap"
+    rel="stylesheet">
+
+  <!-- Material Symbols -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#d3e4fe",
+              "on-background": "#191c1e",
+              "primary": "#ea580c", // Vibrant orange
+              "on-secondary-fixed-variant": "#3f465c",
+              "error": "#ba1a1a",
+              "tertiary-fixed-dim": "#b7c8e1",
+              "secondary-container": "#dae2fd",
+              "on-surface-variant": "#434655",
+              "surface-dim": "#d8dadc",
+              "surface": "#f7f9fb",
+              "surface-container-low": "#f2f4f6",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-container": "#e9f0ff",
+              "on-secondary": "#ffffff",
+              "tertiary": "#46566c",
+              "on-error-container": "#93000a",
+              "background": "#f1f5f9", // Light gray background
+              "outline": "#737686",
+              "on-tertiary-fixed-variant": "#38485d",
+              "primary-fixed-dim": "#ffccbc",
+              "surface-variant": "#e0e3e5",
+              "surface-container-high": "#e6e8ea",
+              "primary-container": "#ea580c",
+              "primary-fixed": "#ffede7",
+              "secondary": "#565e74",
+              "on-secondary-container": "#5c647a",
+              "secondary-fixed": "#dae2fd",
+              "on-primary-fixed": "#4a1b00",
+              "secondary-fixed-dim": "#bec6e0",
+              "on-tertiary-fixed": "#0b1c30",
+              "inverse-on-surface": "#eff1f3",
+              "on-primary-fixed-variant": "#c2410c",
+              "tertiary-container": "#5e6e85",
+              "inverse-primary": "#ffb38e",
+              "error-container": "#ffdad6",
+              "on-surface": "#191c1e",
+              "surface-container-highest": "#e0e3e5",
+              "surface-bright": "#f7f9fb",
+              "on-secondary-fixed": "#131b2e",
+              "surface-container": "#eceef0",
+              "outline-variant": "#c3c6d7",
+              "on-primary-container": "#ffffff",
+              "surface-tint": "#ea580c",
+              "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "md": "16px",
+              "sm": "8px",
+              "xs": "4px",
+              "xl": "40px",
+              "lg": "24px",
+              "gutter": "24px",
+              "base": "4px",
+              "container-max": "1280px"
+            },
+            "fontFamily": {
+              "headline-lg": ["Hanken Grotesk"],
+              "display-lg": ["Hanken Grotesk"],
+              "code-block": ["JetBrains Mono"],
+              "label-caps": ["Inter"],
+              "title-md": ["Hanken Grotesk"],
+              "headline-lg-mobile": ["Hanken Grotesk"],
+              "body-sm": ["Inter"],
+              "body-md": ["Inter"]
+            },
+            "fontSize": {
+              "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+              "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+              "code-block": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+              "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+              "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+              "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+              "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+              "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+            }
+          },
+        },
+      }
+    } catch (_e) { }
+  </script>
+
+  <style>
+    body {
+      background-color: #f1f5f9;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .auth-card {
+      box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Toast styles mapping app.js toast function onto light design */
+    #toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      border: 1px solid #e0e3e5;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      font-size: 0.875rem;
+      font-weight: 500;
+      max-width: 360px;
+      pointer-events: all;
+      animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #191c1e;
+    }
+
+    .toast.success {
+      border-left: 4px solid #ea580c;
+    }
+
+    .toast.error {
+      border-left: 4px solid #ba1a1a;
+    }
+
+    .toast.warning {
+      border-left: 4px solid #f59e0b;
+    }
+
+    .toast.info {
+      border-left: 4px solid #46566c;
+    }
+
+    @keyframes toastIn {
+      from {
+        transform: translateY(100%) scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md">
+
+  <main class="flex-grow flex items-center justify-center px-md py-xl relative overflow-hidden">
+    <!-- Subtle Background Decorative Elements -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-50">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary opacity-5 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary opacity-10 rounded-full blur-3xl"></div>
     </div>
 
-    <form id="register-form" novalidate>
-      <div class="form-group">
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" id="username" type="text"
-          placeholder="cool_coder_42" autocomplete="username" required>
-        <p class="form-hint">3–50 characters, letters / digits / underscore only.</p>
+    <!-- Centered Auth Card -->
+    <div class="auth-card bg-surface w-full max-w-[520px] rounded-xl p-lg md:p-xl z-10 transition-all duration-300">
+      <!-- Brand Header -->
+      <header class="text-center mb-xl flex flex-col items-center">
+        <!-- SVG Code block icon matching login design -->
+        <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-sm shadow-md">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
+          </svg>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Join College CP</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant">Create your competitive programming account</p>
+      </header>
+
+      <!-- Registration Form -->
+      <form class="space-y-lg" id="register-form" novalidate>
+        <!-- Username Field -->
+        <div class="space-y-xs">
+          <label class="font-label-caps text-label-caps text-on-surface-variant block uppercase"
+            for="username">Username</label>
+          <div class="relative group">
+            <span
+              class="material-symbols-outlined absolute left-[14px] top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
+            <input
+              class="w-full bg-white border border-outline-variant rounded-lg py-md !pl-[44px] pr-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/50"
+              id="username" maxlength="50" minlength="3" placeholder="cool_coder_42" required autocomplete="username"
+              type="text">
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
+            3–50 characters, letters / digits / underscore only.
+          </p>
+        </div>
+
+        <!-- Email Field -->
+        <div class="space-y-xs">
+          <label class="font-label-caps text-label-caps text-on-surface-variant block uppercase"
+            for="email">Email</label>
+          <div class="relative group">
+            <span
+              class="material-symbols-outlined absolute left-[14px] top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
+            <input
+              class="w-full bg-white border border-outline-variant rounded-lg py-md !pl-[44px] pr-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/50"
+              id="email" placeholder="you@college.edu" required autocomplete="email" type="email">
+          </div>
+        </div>
+
+        <!-- Password Fields Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+          <div class="space-y-xs">
+            <label class="font-label-caps text-label-caps text-on-surface-variant block uppercase"
+              for="password">Password</label>
+            <div class="relative group">
+              <span
+                class="material-symbols-outlined absolute left-[14px] top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+              <input
+                class="w-full bg-white border border-outline-variant rounded-lg py-md !pl-[44px] pr-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/50"
+                id="password" minlength="8" placeholder="Min. 8 chars" required autocomplete="new-password"
+                type="password">
+            </div>
+          </div>
+          <div class="space-y-xs">
+            <label class="font-label-caps text-label-caps text-on-surface-variant block uppercase"
+              for="confirm-password">Confirm Password</label>
+            <div class="relative group">
+              <span
+                class="material-symbols-outlined absolute left-[14px] top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock_reset</span>
+              <input
+                class="w-full bg-white border border-outline-variant rounded-lg py-md !pl-[44px] pr-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/50"
+                id="confirm-password" placeholder="••••••••" required autocomplete="new-password" type="password">
+            </div>
+          </div>
+        </div>
+        <p class="font-body-sm text-body-sm text-on-surface-variant -mt-sm">Min. 8 chars, 1 letter, 1 digit</p>
+
+        <!-- Primary Action -->
+        <button
+          class="w-full bg-primary hover:bg-on-primary-fixed-variant text-white font-title-md text-title-md py-md rounded-lg shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-sm mt-md"
+          id="register-btn" type="submit">
+          <span>Create Account</span>
+          <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+        </button>
+      </form>
+
+      <!-- Footer Section -->
+      <div class="mt-xl">
+        <hr class="border-outline-variant mb-lg">
+        <div class="text-center">
+          <p class="font-body-md text-body-md text-on-surface-variant">
+            Already have an account?
+            <a class="text-primary font-semibold hover:underline transition-all" href="/index.html">Sign in →</a>
+          </p>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="email">Email</label>
-        <input class="form-control" id="email" type="email"
-          placeholder="you@college.edu" autocomplete="email" required>
+    </div>
+  </main>
+
+  <!-- Shared Component Footer (Simplified for Auth) -->
+  <footer class="bg-surface-container border-t border-outline-variant py-md px-lg">
+    <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-sm">
+      <span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 College CP. Built for competitive
+        excellence.</span>
+      <div class="flex gap-md">
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#">Privacy Policy</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms
+          of Service</a>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-control" id="password" type="password"
-          placeholder="Min. 8 chars, 1 letter, 1 digit" autocomplete="new-password" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="confirm-password">Confirm Password</label>
-        <input class="form-control" id="confirm-password" type="password"
-          placeholder="••••••••" autocomplete="new-password" required>
-      </div>
-      <button class="btn btn-primary btn-full btn-lg" type="submit" id="register-btn">
-        <span class="btn-text">Create Account</span>
-      </button>
-    </form>
+    </div>
+  </footer>
 
-    <hr class="divider">
-    <p style="text-align:center; color:var(--text-secondary); font-size:0.875rem">
-      Already have an account?
-      <a href="/index.html">Sign in →</a>
-    </p>
-
-  </div>
-</div>
-
-<div id="toast-container"></div>
-<script src="/static/app.js"></script>
-<script>
-  if (getToken() && getUser()) window.location.replace('/dashboard.html');
-
-  document.getElementById('register-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn    = document.getElementById('register-btn');
-    const pass   = document.getElementById('password').value;
-    const confirm = document.getElementById('confirm-password').value;
-
-    if (pass !== confirm) {
-      showToast('Passwords do not match', 'error');
-      return;
+  <div id="toast-container"></div>
+  <script src="/static/app.js"></script>
+  <script>
+    // Redirect logged-in users
+    if (typeof getToken === 'function' && typeof getUser === 'function' && getToken() && getUser()) {
+      window.location.replace('/dashboard.html');
     }
 
-    btn.classList.add('loading');
-    btn.disabled = true;
+    const form = document.getElementById('register-form');
+    const btn = document.getElementById('register-btn');
 
-    try {
-      await apiFetch('/api/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({
-          username: document.getElementById('username').value.trim(),
-          email:    document.getElementById('email').value.trim(),
-          password: pass,
-        }),
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pass = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm-password').value;
+
+      if (pass !== confirm) {
+        showToast('Passwords do not match.', 'error');
+        return;
+      }
+
+      const originalContent = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Processing...</span>
+      `;
+
+      try {
+        await apiFetch('/api/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: document.getElementById('username').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            password: pass,
+          }),
+        });
+        showToast('Account created! Please log in.', 'success');
+        setTimeout(() => window.location.href = '/index.html', 1000);
+      } catch (err) {
+        showToast(err.message, 'error');
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
+      }
+    });
+
+    // Input visual focus tracking for mobile keyboards
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.parentElement.classList.add('scale-[1.01]');
       });
-      showToast('Account created! Please log in.', 'success');
-      setTimeout(() => window.location.href = '/index.html', 1000);
-    } catch (err) {
-      showToast(err.message, 'error');
-      btn.classList.remove('loading');
-      btn.disabled = false;
-    }
-  });
-</script>
+      input.addEventListener('blur', () => {
+        input.parentElement.parentElement.classList.remove('scale-[1.01]');
+      });
+    });
+  </script>
 </body>
+
 </html>

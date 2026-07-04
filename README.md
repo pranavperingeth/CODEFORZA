@@ -70,7 +70,6 @@ college-cp/
     ├── dashboard.html   ← Problem list + submission history
     ├── problem.html     ← Problem detail + Monaco Editor
     ├── admin.html       ← Admin panel (server-side protected)
-    ├── styles.css       ← Full dark-theme design system
     └── app.js           ← Shared JS: auth helpers, apiFetch, toasts, formatters
 ```
 

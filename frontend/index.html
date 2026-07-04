@@ -1,85 +1,301 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Login — College CP</title>
   <meta name="description" content="Sign in to your College CP competitive programming account.">
-  <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-<div class="auth-page">
-  <div class="auth-card">
 
-    <!-- Brand -->
-    <div class="auth-brand">
-      <div class="auth-brand-icon">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="16 18 22 12 16 6"/>
-          <polyline points="8 6 2 12 8 18"/>
+  <!-- Fonts & Icons -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,FILL@0..1&amp;display=block"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Hanken+Grotesk:wght@600;700&amp;family=JetBrains+Mono&amp;display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "surface-dim": "#d8dadc",
+              "surface-container-low": "#f2f4f6",
+              "tertiary-container": "#5e6e85",
+              "primary-fixed-dim": "#ffdbca",
+              "on-primary-fixed-variant": "#943a00",
+              "error": "#ba1a1a",
+              "primary-fixed": "#ffdbc9",
+              "secondary-fixed": "#fbdccf",
+              "primary": "#f97316", // Updated to energetic orange
+              "on-surface": "#191c1e",
+              "surface-container": "#eceef0",
+              "tertiary-fixed": "#d3e4fe",
+              "surface": "#f7f9fb",
+              "on-secondary": "#ffffff",
+              "surface-variant": "#e0e3e5",
+              "tertiary-fixed-dim": "#b7c8e1",
+              "on-tertiary-fixed-variant": "#38485d",
+              "on-background": "#191c1e",
+              "on-primary-fixed": "#331200",
+              "secondary-fixed-dim": "#dfc0b1",
+              "inverse-on-surface": "#eff1f3",
+              "on-secondary-fixed-variant": "#5a443a",
+              "surface-bright": "#f7f9fb",
+              "surface-container-high": "#e6e8ea",
+              "on-error-container": "#93000a",
+              "on-secondary-container": "#5c647a",
+              "primary-container": "#ea580c",
+              "inverse-primary": "#ffb68f",
+              "secondary": "#765749",
+              "surface-tint": "#f97316",
+              "on-primary-container": "#ffffff",
+              "on-tertiary-container": "#e9f0ff",
+              "on-tertiary-fixed": "#0b1c30",
+              "secondary-container": "#fbdccf",
+              "on-primary": "#ffffff",
+              "outline": "#737686",
+              "on-surface-variant": "#434655",
+              "on-error": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e0e3e5",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "error-container": "#ffdad6",
+              "background": "#f7f9fb",
+              "outline-variant": "#c3c6d7",
+              "on-secondary-fixed": "#2c150b",
+              "tertiary": "#46566c"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "lg": "24px",
+              "md": "16px",
+              "xl": "40px",
+              "base": "4px",
+              "xs": "4px",
+              "gutter": "24px",
+              "container-max": "1280px",
+              "sm": "8px"
+            },
+            "fontFamily": {
+              "code-block": ["JetBrains Mono"],
+              "label-caps": ["Inter"],
+              "body-sm": ["Inter"],
+              "title-md": ["Hanken Grotesk"],
+              "headline-lg": ["Hanken Grotesk"],
+              "body-md": ["Inter"]
+            },
+            "fontSize": {
+              "code-block": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+              "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+              "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+              "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+              "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+              "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+            }
+          },
+        },
+      }
+    } catch (_e) { }
+  </script>
+
+  <style>
+    /* Premium custom card style */
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid #e0e3e5;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Toast styles mapping app.js toast function onto light design */
+    #toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      border: 1px solid #e0e3e5;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      font-size: 0.875rem;
+      font-weight: 500;
+      max-width: 360px;
+      pointer-events: all;
+      animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #191c1e;
+    }
+
+    .toast.success {
+      border-left: 4px solid #f97316;
+    }
+
+    .toast.error {
+      border-left: 4px solid #ba1a1a;
+    }
+
+    .toast.warning {
+      border-left: 4px solid #f59e0b;
+    }
+
+    .toast.info {
+      border-left: 4px solid #46566c;
+    }
+
+    @keyframes toastIn {
+      from {
+        transform: translateY(100%) scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body
+  class="font-body-md text-body-md text-on-surface min-h-screen flex items-center justify-center p-md bg-background">
+
+  <!-- Main Auth Canvas - Perfectly Centered -->
+  <main class="w-full max-w-[440px] flex flex-col gap-lg items-center my-auto">
+    <!-- Brand Header Section -->
+    <header class="flex flex-col items-center text-center gap-base">
+      <!-- Premium brand icon matching the platform's focus -->
+      <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-sm shadow-md">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
         </svg>
       </div>
-      <h1>College CP</h1>
-      <p>Competitive Programming Platform</p>
+      <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">College CP</h1>
+      <p class="font-body-md text-on-surface-variant">Competitive Programming Platform</p>
+    </header>
+
+    <!-- Login Card -->
+    <section class="auth-card rounded-xl p-xl flex flex-col gap-lg w-full">
+      <form class="flex flex-col gap-md" id="login-form" novalidate>
+        <!-- Username Field -->
+        <div class="flex flex-col gap-base">
+          <label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider"
+            for="username">Username</label>
+          <input
+            class="w-full px-md py-md bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+            id="username" placeholder="Enter your username" autocomplete="username" required type="text">
+        </div>
+
+        <!-- Password Field -->
+        <div class="flex flex-col gap-base">
+          <div class="flex justify-between items-center">
+            <label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider"
+              for="password">Password</label>
+            <a class="text-label-caps text-primary hover:text-[#ea580c] transition-all font-semibold"
+              href="#">Forgot?</a>
+          </div>
+          <input
+            class="w-full px-md py-md bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+            id="password" placeholder="••••••••" autocomplete="current-password" required type="password">
+        </div>
+
+        <!-- Action Button -->
+        <button
+          class="mt-sm w-full h-12 bg-primary text-on-primary font-semibold rounded-lg hover:bg-[#ea580c] active:opacity-90 transition-all flex items-center justify-center gap-sm shadow-md"
+          id="login-btn" type="submit">
+          <span class="btn-text flex items-center gap-sm">
+            <!-- <span>Sign In</span> -->
+            <span class="material-symbols-outlined text-[18px]">Sign In</span>
+          </span>
+        </button>
+      </form>
+
+      <div class="relative py-base flex items-center">
+        <div class="flex-grow border-t border-outline-variant"></div>
+        <span class="px-md text-label-caps text-outline bg-surface-container-lowest">OR</span>
+        <div class="flex-grow border-t border-outline-variant"></div>
+      </div>
+
+      <!-- Secondary Action -->
+      <footer class="text-center">
+        <p class="font-body-sm text-on-surface-variant">
+          Don't have an account?
+          <a class="text-primary font-semibold hover:text-[#ea580c] transition-all decoration-2 underline-offset-4 ml-xs"
+            href="/register.html">Create one →</a>
+        </p>
+      </footer>
+    </section>
+
+    <!-- Footer Links -->
+    <div class="flex justify-center gap-lg">
+      <a class="text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy
+        Policy</a>
+      <a class="text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+      <a class="text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Help</a>
     </div>
+  </main>
 
-    <!-- Login form -->
-    <form id="login-form" novalidate>
-      <div class="form-group">
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" id="username" type="text"
-          placeholder="your_username" autocomplete="username" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-control" id="password" type="password"
-          placeholder="••••••••" autocomplete="current-password" required>
-      </div>
-      <button class="btn btn-primary btn-full btn-lg" type="submit" id="login-btn">
-        <span class="btn-text">Sign In</span>
-      </button>
-    </form>
-
-    <hr class="divider">
-    <p style="text-align:center; color:var(--text-secondary); font-size:0.875rem">
-      Don't have an account?
-      <a href="/register.html">Create one →</a>
-    </p>
-
-  </div>
-</div>
-
-<div id="toast-container"></div>
-<script src="/static/app.js"></script>
-<script>
-  // Already logged in → go to dashboard
-  if (getToken() && getUser()) window.location.replace('/dashboard.html');
-
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('login-btn');
-    btn.classList.add('loading');
-    btn.disabled = true;
-
-    try {
-      const data = await apiFetch('/api/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          username: document.getElementById('username').value.trim(),
-          password: document.getElementById('password').value,
-        }),
-      });
-      if (!data) return;
-      setToken(data.access_token);
-      setUser(data.user);
-      showToast(`Welcome back, ${data.user.username}! 🎉`, 'success');
-      setTimeout(() => window.location.href = '/dashboard.html', 600);
-    } catch (err) {
-      showToast(err.message, 'error');
-      btn.classList.remove('loading');
-      btn.disabled = false;
+  <div id="toast-container"></div>
+  <script src="/static/app.js"></script>
+  <script>
+    // Already logged in → go to dashboard
+    if (typeof getToken === 'function' && typeof getUser === 'function' && getToken() && getUser()) {
+      window.location.replace('/dashboard.html');
     }
-  });
-</script>
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('login-btn');
+      const originalContent = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="animate-spin w-5 h-5 border-2 border-white/30 border-t-white rounded-full"></span>`;
+
+      try {
+        const data = await apiFetch('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: document.getElementById('username').value.trim(),
+            password: document.getElementById('password').value,
+          }),
+        });
+        if (!data) {
+          btn.disabled = false;
+          btn.innerHTML = originalContent;
+          return;
+        }
+        setToken(data.access_token);
+        setUser(data.user);
+        showToast(`Welcome back, ${data.user.username}! 🎉`, 'success');
+        setTimeout(() => window.location.href = '/dashboard.html', 600);
+      } catch (err) {
+        showToast(err.message, 'error');
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
+      }
+    });
+  </script>
 </body>
+
 </html>

@@ -1,409 +1,728 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel — College CP</title>
-  <meta name="description" content="Admin panel for managing users and problems.">
-  <link rel="stylesheet" href="/static/styles.css">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Panel | College CP</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    .active-tab {
+      border-bottom: 2px solid #ea580c;
+      color: #ea580c;
+    }
+    /* Custom Scrollbar for Code/Tables */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    /* Badges Styling */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: var(--font-label-caps, 'Inter');
+    }
+    .diff-easy {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+    }
+    .diff-medium {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+    }
+    .diff-hard {
+      background: var(--error-container, #ffdad6);
+      color: var(--error, #ba1a1a);
+    }
+    /* Modal display override helper mapping app.js classes */
+    #confirm-modal.open {
+      display: flex !important;
+    }
+    /* Toast styles mapping app.js toast function onto light design */
+    #toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      border: 1px solid #e0e3e5;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      font-size: 0.875rem;
+      font-weight: 500;
+      max-width: 360px;
+      pointer-events: all;
+      animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #191c1e;
+    }
+    .toast.success { border-left: 4px solid #ea580c; }
+    .toast.error   { border-left: 4px solid #ba1a1a; }
+    .toast.warning { border-left: 4px solid #f59e0b; }
+    .toast.info    { border-left: 4px solid #46566c; }
+    @keyframes toastIn {
+      from { transform: translateY(100%) scale(0.9); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+  </style>
+  
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "on-secondary-fixed": "#131b2e",
+              "on-background": "#191c1e",
+              "on-tertiary-fixed-variant": "#38485d",
+              "on-primary-fixed": "#4a1b00",
+              "surface-container-high": "#e6e8ea",
+              "on-secondary-fixed-variant": "#3f465c",
+              "inverse-primary": "#ffb38e",
+              "surface": "#f7f9fb",
+              "secondary-container": "#dae2fd",
+              "outline-variant": "#c3c6d7",
+              "surface-container-highest": "#e0e3e5",
+              "secondary-fixed-dim": "#bec6e0",
+              "secondary": "#565e74",
+              "on-secondary-container": "#5c647a",
+              "primary-fixed-dim": "#ffccbc",
+              "inverse-surface": "#2d3133",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed": "#dae2fd",
+              "on-tertiary-fixed": "#0b1c30",
+              "on-secondary": "#ffffff",
+              "error-container": "#ffdad6",
+              "background": "#f7f9fb",
+              "on-primary": "#ffffff",
+              "tertiary-container": "#5e6e85",
+              "inverse-on-surface": "#eff1f3",
+              "surface-container": "#eceef0",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-low": "#f2f4f6",
+              "on-error-container": "#93000a",
+              "surface-variant": "#e0e3e5",
+              "tertiary": "#46566c",
+              "surface-bright": "#f7f9fb",
+              "outline": "#737686",
+              "surface-dim": "#d8dadc",
+              "primary-container": "#ea580c",
+              "on-primary-fixed-variant": "#c2410c",
+              "tertiary-fixed-dim": "#b7c8e1",
+              "on-surface-variant": "#434655",
+              "surface-tint": "#ea580c",
+              "on-tertiary-container": "#e9f0ff",
+              "on-surface": "#191c1e",
+              "on-error": "#ffffff",
+              "on-primary-container": "#ffffff",
+              "tertiary-fixed": "#d3e4fe",
+              "primary-fixed": "#ffede7",
+              "error": "#ba1a1a",
+              "primary": "#ea580c",
+              "accent-orange": "#f97316"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "xl": "40px",
+              "sm": "8px",
+              "gutter": "24px",
+              "container-max": "1280px",
+              "xs": "4px",
+              "lg": "24px",
+              "md": "16px",
+              "base": "4px"
+            },
+            "fontFamily": {
+              "headline-lg": ["Hanken Grotesk"],
+              "display-lg": ["Hanken Grotesk"],
+              "label-caps": ["Inter"],
+              "code-block": ["JetBrains Mono"],
+              "title-md": ["Hanken Grotesk"],
+              "headline-lg-mobile": ["Hanken Grotesk"],
+              "body-sm": ["Inter"],
+              "body-md": ["Inter"]
+            },
+            "fontSize": {
+              "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+              "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+              "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+              "code-block": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+              "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+              "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+              "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+              "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+            }
+          },
+        },
+      }
+    } catch (_e) {}
+  </script>
 </head>
-<body>
+<body class="bg-background font-body-md text-on-background min-h-screen">
 
-<!-- ── Navbar ────────────────────────────────────────────────────────────── -->
-<nav class="navbar">
-  <a class="navbar-brand" href="/dashboard.html">
-    <div class="brand-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-      </svg>
-    </div>
-    <span class="brand-name">College CP</span>
-  </a>
-  <ul class="navbar-nav">
-    <li><a href="/dashboard.html" data-page="dashboard">Problems</a></li>
-    <li><a href="/admin.html" data-page="admin" class="active" id="admin-nav-link">Admin</a></li>
-  </ul>
-  <div class="navbar-spacer"></div>
-  <div id="user-pill" class="user-pill"></div>
-  <button class="btn btn-ghost btn-sm" id="logout-btn">Logout</button>
-</nav>
-
-<!-- ── Main ──────────────────────────────────────────────────────────────── -->
-<div class="container page-content">
-
-  <div class="page-header">
-    <div class="page-header-row">
-      <div>
-        <h1>Admin Panel</h1>
-        <p>Manage problems and users</p>
+  <!-- TopNavBar -->
+  <header class="bg-surface-container-lowest sticky top-0 z-50 border-b border-outline-variant shadow-sm h-16">
+    <div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-full">
+      <!-- Left: Brand & Nav Links -->
+      <div class="flex items-center gap-xl">
+        <a class="font-headline-lg text-headline-lg font-bold text-primary hover:opacity-90 transition-opacity" href="/dashboard.html">College CP</a>
+        <nav class="hidden md:flex items-center gap-lg navbar-nav">
+          <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200" href="/dashboard.html" data-page="dashboard">Problems</a>
+          <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200" href="/admin.html" id="admin-nav-link" data-page="admin" style="display:none">Admin</a>
+        </nav>
+      </div>
+      <!-- Right: User Identity & Actions -->
+      <div class="flex items-center gap-md">
+        <!-- Managed dynamically by app.js / script -->
+        <div id="user-pill" class="flex items-center gap-sm bg-surface-container-high px-md py-xs rounded-full border border-outline-variant"></div>
+        <button class="flex items-center gap-xs px-md py-sm bg-surface-container-low text-error hover:bg-error-container font-semibold rounded-lg transition-all active:scale-95 cursor-pointer" id="logout-btn">
+          <span class="material-symbols-outlined text-[20px]">logout</span>
+          <span class="font-label-caps font-bold">Logout</span>
+        </button>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Tabs -->
-  <div id="admin-tabs" class="tabs">
-    <button class="tab-btn active" data-tab="tab-problems">🧩 Problems</button>
-    <button class="tab-btn" data-tab="tab-users">👤 Users</button>
-    <button class="tab-btn" data-tab="tab-add-problem">➕ Add Problem</button>
-  </div>
+  <main class="max-w-container-max mx-auto px-gutter py-xl">
+    <!-- Page Header -->
+    <header class="mb-xl">
+      <h1 class="font-headline-lg text-headline-lg text-on-surface">Admin Panel</h1>
+      <p class="font-body-md text-on-surface-variant">Manage competitive programming problems, user accounts, and platform health.</p>
+    </header>
 
-  <!-- ── Tab: Problems ─────────────────────────────────────────────────── -->
-  <div class="tab-panel active" id="tab-problems">
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">All Problems</span>
-        <button class="btn btn-primary btn-sm" onclick="switchTab('tab-add-problem')">+ Add Problem</button>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>#</th><th>Title</th><th>Difficulty</th><th>Time Limit</th><th>Actions</th></tr>
-          </thead>
-          <tbody id="admin-problems-tbody">
-            <tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading…</h3></div></td></tr>
-          </tbody>
-        </table>
-      </div>
+    <!-- Tab Bar -->
+    <div class="flex border-b border-outline-variant mb-lg overflow-x-auto" id="admin-tabs">
+      <button class="flex items-center gap-sm px-lg py-md font-title-md text-body-md active-tab hover:bg-surface-container-low transition-colors font-bold text-primary" id="tab-problems" onclick="switchTab('problems')">
+        <span class="material-symbols-outlined">extension</span>
+        Problems
+      </button>
+      <button class="flex items-center gap-sm px-lg py-md font-title-md text-body-md text-on-surface-variant hover:text-primary transition-colors" id="tab-users" onclick="switchTab('users')">
+        <span class="material-symbols-outlined">group</span>
+        Users
+      </button>
+      <button class="flex items-center gap-sm px-lg py-md font-title-md text-body-md text-on-surface-variant hover:text-primary transition-colors" id="tab-add-problem" onclick="switchTab('add-problem')">
+        <span class="material-symbols-outlined">add_box</span>
+        Add Problem
+      </button>
     </div>
-  </div>
 
-  <!-- ── Tab: Users ────────────────────────────────────────────────────── -->
-  <div class="tab-panel" id="tab-users">
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">All Users</span>
-        <span id="user-count" style="color:var(--text-muted);font-size:0.85rem"></span>
+    <!-- Problems Tab Content -->
+    <section class="space-y-lg" id="content-problems">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+        <div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+          <h2 class="font-title-md text-title-md">All Problems</h2>
+          <button class="bg-primary text-on-primary px-lg py-sm rounded-lg font-semibold flex items-center gap-xs hover:bg-primary-container transition-all active:scale-95 shadow-md" onclick="switchTab('add-problem')">
+            <span class="material-symbols-outlined">add</span>
+            Add Problem
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-surface-container-low font-label-caps text-on-surface-variant border-b border-outline-variant/60">
+              <tr>
+                <th class="px-lg py-md">#</th>
+                <th class="px-lg py-md">Title</th>
+                <th class="px-lg py-md">Difficulty</th>
+                <th class="px-lg py-md">Time Limit</th>
+                <th class="px-lg py-md text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/50" id="admin-problems-tbody">
+              <tr>
+                <td colspan="5">
+                  <div class="empty-state p-lg text-center animate-pulse">
+                    <div class="empty-state-icon text-xl">⏳</div>
+                    <h3 class="font-title-md font-bold mt-2">Loading problems…</h3>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr>
-          </thead>
-          <tbody id="admin-users-tbody">
-            <tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading…</h3></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- ── Tab: Add Problem ───────────────────────────────────────────────── -->
-  <div class="tab-panel" id="tab-add-problem">
-    <div class="card">
-      <div class="card-header"><span class="card-title">Create New Problem</span></div>
-      <div class="card-body">
-        <form id="add-problem-form">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-            <div class="form-group" style="grid-column:1/-1">
-              <label class="form-label">Title</label>
-              <input class="form-control" id="p-title" type="text" placeholder="Problem title" required>
+    <!-- Users Tab Content -->
+    <section class="hidden space-y-lg" id="content-users">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+        <div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+          <div>
+            <h2 class="font-title-md text-title-md">All Users</h2>
+            <span class="font-body-sm text-on-surface-variant" id="user-count">Loading users...</span>
+          </div>
+          <div class="relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+            <input class="pl-10 pr-lg py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-body-sm bg-surface-container-lowest" id="user-search-input" placeholder="Search users..." type="text"/>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-surface-container-low font-label-caps text-on-surface-variant border-b border-outline-variant/60">
+              <tr>
+                <th class="px-lg py-md">Username</th>
+                <th class="px-lg py-md">Role</th>
+                <th class="px-lg py-md">Status</th>
+                <th class="px-lg py-md">Joined</th>
+                <th class="px-lg py-md text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/50" id="admin-users-tbody">
+              <tr>
+                <td colspan="5">
+                  <div class="empty-state p-lg text-center animate-pulse">
+                    <div class="empty-state-icon text-xl">⏳</div>
+                    <h3 class="font-title-md font-bold mt-2">Loading users…</h3>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Problem Tab Content -->
+    <section class="hidden animate-in fade-in duration-300" id="content-add-problem">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+        <div class="px-lg py-md border-b border-outline-variant bg-surface-container-low">
+          <h2 class="font-title-md text-title-md">Create New Problem</h2>
+        </div>
+        <form class="p-lg space-y-lg" id="add-problem-form" novalidate>
+          <!-- Basic Info -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+            <div class="md:col-span-2 space-y-sm">
+              <label class="font-label-caps text-on-surface-variant block uppercase" for="p-title">Problem Title</label>
+              <input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-surface-container-lowest" id="p-title" placeholder="e.g., Maximum Subarray Sum" type="text" required />
             </div>
-            <div class="form-group">
-              <label class="form-label">Difficulty (800–3500)</label>
-              <input class="form-control" id="p-difficulty" type="number" min="800" max="3500" step="100" value="1000">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Time Limit (seconds)</label>
-              <input class="form-control" id="p-time-limit" type="number" min="0.5" max="10" step="0.5" value="2">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Memory Limit (MB)</label>
-              <input class="form-control" id="p-memory" type="number" min="64" max="1024" step="64" value="256">
-            </div>
-            <div class="form-group" style="grid-column:1/-1">
-              <label class="form-label">Problem Statement</label>
-              <textarea class="form-control" id="p-statement" rows="5" placeholder="Describe the problem clearly…" required></textarea>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Input Format</label>
-              <textarea class="form-control" id="p-input-format" rows="3" placeholder="Describe the input format…"></textarea>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Output Format</label>
-              <textarea class="form-control" id="p-output-format" rows="3" placeholder="Describe the expected output…"></textarea>
-            </div>
-            <div class="form-group" style="grid-column:1/-1">
-              <label class="form-label">Constraints</label>
-              <textarea class="form-control" id="p-constraints" rows="2" placeholder="e.g. 1 ≤ N ≤ 10^5"></textarea>
+            <div class="space-y-sm">
+              <label class="font-label-caps text-on-surface-variant block uppercase" for="p-difficulty">Difficulty Rating</label>
+              <input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-surface-container-lowest" id="p-difficulty" max="3500" min="800" step="100" type="number" value="1000" />
             </div>
           </div>
-
-          <!-- Test Cases -->
-          <div style="margin-top:1rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem">
-              <label class="form-label" style="margin:0">Test Cases</label>
-              <button type="button" class="btn btn-ghost btn-sm" id="add-tc-btn">+ Add Test Case</button>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+            <div class="space-y-sm">
+              <label class="font-label-caps text-on-surface-variant block uppercase" for="p-time-limit">Time Limit (seconds)</label>
+              <input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-surface-container-lowest" id="p-time-limit" step="0.5" min="0.5" max="10" type="number" value="2.0" />
             </div>
-            <div class="tc-list" id="tc-list"></div>
-            <p class="form-hint">At least one test case recommended. Mark as "Sample" to show it to contestants.</p>
+            <div class="space-y-sm">
+              <label class="font-label-caps text-on-surface-variant block uppercase" for="p-memory">Memory Limit (MB)</label>
+              <input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none bg-surface-container-lowest" id="p-memory" min="64" max="1024" step="64" type="number" value="256" />
+            </div>
           </div>
-
-          <div style="margin-top:1.5rem;display:flex;gap:0.75rem;justify-content:flex-end">
-            <button type="button" class="btn btn-ghost" onclick="resetProblemForm()">Clear</button>
-            <button type="submit" class="btn btn-primary" id="create-problem-btn">
-              <span class="btn-text">Create Problem</span>
-            </button>
+          <!-- Description Area -->
+          <div class="space-y-sm">
+            <label class="font-label-caps text-on-surface-variant block uppercase" for="p-statement">Problem Statement</label>
+            <textarea class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none font-body-md bg-surface-container-lowest" id="p-statement" placeholder="Describe the task clearly..." rows="6" required></textarea>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+            <div class="space-y-sm">
+              <label class="font-label-caps text-on-surface-variant block uppercase" for="p-input-format">Input Format</label>
+              <textarea class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-body-sm bg-surface-container-lowest" id="p-input-format" placeholder="Explain the input structure..." rows="3"></textarea>
+            </div>
+            <div class="space-y-sm">
+              <label class="font-label-caps text-on-surface-variant block uppercase" for="p-output-format">Output Format</label>
+              <textarea class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none text-body-sm bg-surface-container-lowest" id="p-output-format" placeholder="Explain the expected output format..." rows="3"></textarea>
+            </div>
+          </div>
+          <div class="space-y-sm">
+            <label class="font-label-caps text-on-surface-variant block uppercase" for="p-constraints">Constraints</label>
+            <textarea class="w-full px-md py-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none font-code-block text-body-sm bg-surface-container-lowest" id="p-constraints" placeholder="e.g., 1 <= N <= 10^5" rows="2"></textarea>
+          </div>
+          <!-- Test Cases Section -->
+          <div class="space-y-md pt-md border-t border-outline-variant">
+            <div class="flex justify-between items-center">
+              <h3 class="font-title-md text-on-surface">Test Cases</h3>
+              <button class="text-primary font-semibold flex items-center gap-xs hover:underline cursor-pointer" type="button" id="add-tc-btn">
+                <span class="material-symbols-outlined">add_circle</span>
+                Add Row
+              </button>
+            </div>
+            <div class="space-y-md bg-surface-container-low p-md rounded-xl border border-outline-variant" id="tc-list">
+              <!-- Dynamically populated testcase rows -->
+            </div>
+          </div>
+          <!-- Form Footer Actions -->
+          <div class="flex justify-end items-center gap-lg pt-xl">
+            <button class="px-xl py-md text-on-surface-variant font-semibold hover:bg-surface-container transition-all rounded-lg cursor-pointer" type="button" onclick="resetProblemForm()">Clear</button>
+            <button class="px-xl py-md bg-orange-600 text-white font-bold hover:bg-orange-700 transition-all rounded-lg shadow-lg active:scale-95 cursor-pointer" id="create-problem-btn" type="submit">Create Problem</button>
           </div>
         </form>
       </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant full-width py-lg mt-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center px-gutter max-w-container-max mx-auto w-full">
+      <span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 College CP. All rights reserved.</span>
+      <div class="flex gap-lg mt-md md:mt-0">
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Documentation</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Confirmation Modal -->
+  <div class="fixed inset-0 z-[100] hidden items-center justify-center p-md" id="confirm-modal">
+    <div class="absolute inset-0 bg-inverse-surface/40 backdrop-blur-sm" onclick="closeModal('confirm-modal')"></div>
+    <div class="w-full max-w-md bg-surface-container-lowest rounded-xl shadow-2xl border border-outline-variant overflow-hidden z-10 animate-in zoom-in duration-200">
+      <div class="p-lg text-center">
+        <span class="material-symbols-outlined text-[64px] text-error mb-md">warning</span>
+        <h3 class="font-headline-lg text-headline-lg-mobile mb-sm">Confirm Action</h3>
+        <p class="text-on-surface-variant" id="confirm-msg"></p>
+      </div>
+      <div class="flex border-t border-outline-variant">
+        <button class="flex-1 px-lg py-md font-semibold text-on-surface hover:bg-surface-container-low transition-colors border-r border-outline-variant" onclick="closeModal('confirm-modal')">Cancel</button>
+        <button class="flex-1 px-lg py-md font-bold text-error hover:bg-error-container transition-colors" id="confirm-yes-btn">Confirm</button>
+      </div>
     </div>
   </div>
 
-</div>
+  <div id="toast-container"></div>
 
-<!-- ── Confirm delete modal ───────────────────────────────────────────────── -->
-<div class="modal-overlay" id="confirm-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">⚠️ Confirm Delete</span>
-      <button class="modal-close" onclick="closeModal('confirm-modal')">×</button>
-    </div>
-    <div class="modal-body">
-      <p id="confirm-msg" style="color:var(--text-secondary)"></p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('confirm-modal')">Cancel</button>
-      <button class="btn btn-danger" id="confirm-yes-btn">Delete</button>
-    </div>
-  </div>
-</div>
+  <script src="/static/app.js"></script>
+  <script>
+    // ── Auth ──────────────────────────────────────────────────────────────────
+    const currentUser = requireAuth(true); // admin only
+    if (currentUser) {
+      initNavbar('admin');
+      
+      // Fix the user-pill dynamically to match the design
+      const pill = document.getElementById('user-pill');
+      if (pill) {
+        pill.className = "flex items-center gap-sm bg-surface-container-high px-md py-xs rounded-full border border-outline-variant";
+        pill.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-[#ea580c]/10 flex items-center justify-center text-[#ea580c] font-bold text-sm">
+            <span class="material-symbols-outlined text-[18px]">person</span>
+          </div>
+          <span class="font-label-caps text-label-caps text-on-surface font-semibold">${currentUser.username}</span>
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase bg-[#ea580c]/10 text-[#ea580c]">${currentUser.role}</span>
+        `;
+      }
+    }
 
-<div id="toast-container"></div>
-<script src="/static/app.js"></script>
-<script>
-// ── Auth ──────────────────────────────────────────────────────────────────
-const currentUser = requireAuth(true); // admin only
-if (currentUser) initNavbar('admin');
+    // ── Tab system ────────────────────────────────────────────────────────────
+    function switchTab(tabId) {
+      const cleanId = tabId.startsWith('tab-') ? tabId.replace('tab-', '') : tabId;
 
-// ── Tab system ────────────────────────────────────────────────────────────
-document.querySelectorAll('#admin-tabs .tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-});
-function switchTab(tabId) {
-  document.querySelectorAll('#admin-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelector(`[data-tab="${tabId}"]`)?.classList.add('active');
-  document.getElementById(tabId)?.classList.add('active');
-}
+      // Hide all content
+      ['problems', 'users', 'add-problem'].forEach(id => {
+        const contentEl = document.getElementById(`content-${id}`);
+        if (contentEl) contentEl.classList.add('hidden');
+        
+        const tabBtn = document.getElementById(`tab-${id}`);
+        if (tabBtn) {
+          tabBtn.classList.remove('active-tab', 'text-primary', 'font-bold');
+          tabBtn.classList.add('text-on-surface-variant');
+        }
+      });
 
-// ── Load data ─────────────────────────────────────────────────────────────
-let _allUsers    = [];
-let _allProblems = [];
+      // Show selected content
+      const activeContentEl = document.getElementById(`content-${cleanId}`);
+      if (activeContentEl) activeContentEl.classList.remove('hidden');
+      
+      const activeBtn = document.getElementById(`tab-${cleanId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active-tab', 'text-primary', 'font-bold');
+        activeBtn.classList.remove('text-on-surface-variant');
+      }
+    }
 
-async function loadAll() {
-  try {
-    [_allProblems, _allUsers] = await Promise.all([
-      apiFetch('/api/problems/'),
-      apiFetch('/api/users/'),
-    ]);
-    renderProblems(_allProblems);
-    renderUsers(_allUsers);
-  } catch (err) {
-    showToast('Failed to load data: ' + err.message, 'error');
-  }
-}
+    // ── Load data ─────────────────────────────────────────────────────────────
+    let _allUsers    = [];
+    let _allProblems = [];
 
-// ── Problems table ────────────────────────────────────────────────────────
-function renderProblems(problems) {
-  const tbody = document.getElementById('admin-problems-tbody');
-  if (!problems.length) {
-    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>No problems yet</h3></div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = problems.map((p, i) => `
-    <tr>
-      <td style="color:var(--text-muted)">${i+1}</td>
-      <td><a href="/problem.html?id=${p.id}" style="color:var(--text-primary);font-weight:600">${escHtml(p.title)}</a></td>
-      <td>${diffBadge(p.difficulty)}</td>
-      <td style="font-family:var(--font-code);font-size:0.82rem">${p.time_limit}s</td>
-      <td>
-        <button class="btn btn-danger btn-sm" onclick="confirmDeleteProblem('${p.id}', '${escAttr(p.title)}')">Delete</button>
-      </td>
-    </tr>
-  `).join('');
-}
+    async function loadAll() {
+      try {
+        [_allProblems, _allUsers] = await Promise.all([
+          apiFetch('/api/problems/'),
+          apiFetch('/api/users/'),
+        ]);
+        renderProblems(_allProblems);
+        renderUsers(_allUsers);
+      } catch (err) {
+        showToast('Failed to load data: ' + err.message, 'error');
+      }
+    }
 
-// ── Users table ───────────────────────────────────────────────────────────
-function renderUsers(users) {
-  document.getElementById('user-count').textContent = `${users.length} user${users.length !== 1 ? 's' : ''}`;
-  const tbody = document.getElementById('admin-users-tbody');
-  if (!users.length) {
-    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👤</div><h3>No users</h3></div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = users.map(u => `
-    <tr>
-      <td style="color:var(--text-primary);font-weight:500">${escHtml(u.username)}</td>
-      <td style="color:var(--text-secondary)">${escHtml(u.email)}</td>
-      <td>
-        <select class="form-control" style="width:110px;padding:0.3rem 0.5rem"
-          onchange="changeRole('${u.id}', this.value)"
-          ${u.id === currentUser.id ? 'disabled title="Cannot change your own role"' : ''}>
-          <option value="user"  ${u.role==='user'  ? 'selected' : ''}>User</option>
-          <option value="admin" ${u.role==='admin' ? 'selected' : ''}>Admin</option>
-        </select>
-      </td>
-      <td>
-        <span class="badge ${u.is_active ? 'badge-active' : 'badge-inactive'}">
-          ${u.is_active ? 'Active' : 'Inactive'}
-        </span>
-      </td>
-      <td style="color:var(--text-muted);font-size:0.82rem">${fmtDateShort(u.created_at)}</td>
-      <td>
-        <button class="btn btn-danger btn-sm"
-          onclick="confirmDeactivateUser('${u.id}', '${escAttr(u.username)}')"
-          ${u.id === currentUser.id ? 'disabled title="Cannot deactivate yourself"' : ''}
-          ${!u.is_active ? 'disabled' : ''}>
-          Deactivate
-        </button>
-      </td>
-    </tr>
-  `).join('');
-}
+    // ── Problems table ────────────────────────────────────────────────────────
+    function renderProblems(problems) {
+      const tbody = document.getElementById('admin-problems-tbody');
+      if (!problems.length) {
+        tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state p-lg text-center"><div class="empty-state-icon text-xl">📋</div><h3 class="font-title-md font-bold mt-2">No problems yet</h3></div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = problems.map((p, i) => `
+        <tr class="hover:bg-surface-container transition-colors group">
+          <td class="px-lg py-md font-code-block text-on-surface-variant">${i+1}</td>
+          <td class="px-lg py-md font-semibold text-primary cursor-pointer hover:underline"><a href="/problem.html?id=${p.id}">${escHtml(p.title)}</a></td>
+          <td class="px-lg py-md">${diffBadge(p.difficulty)}</td>
+          <td class="px-lg py-md text-on-surface-variant font-code-block">${p.time_limit}s</td>
+          <td class="px-lg py-md text-right">
+            <button class="text-error opacity-60 hover:opacity-100 transition-opacity p-2 rounded-lg hover:bg-error-container cursor-pointer" onclick="confirmDeleteProblem('${p.id}', '${escAttr(p.title)}')">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
 
-// ── Role change ───────────────────────────────────────────────────────────
-async function changeRole(userId, role) {
-  try {
-    await apiFetch(`/api/users/${userId}/role`, {
-      method: 'PUT',
-      body: JSON.stringify({ role }),
+    // ── Users table ───────────────────────────────────────────────────────────
+    function renderUsers(users) {
+      document.getElementById('user-count').textContent = `${users.length} user${users.length !== 1 ? 's' : ''}`;
+      const tbody = document.getElementById('admin-users-tbody');
+      if (!users.length) {
+        tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state p-lg text-center"><div class="empty-state-icon text-xl">👤</div><h3 class="font-title-md font-bold mt-2">No users</h3></div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = users.map(u => {
+        const isSelf = u.id === currentUser.id;
+        const selectAttr = isSelf ? 'disabled title="Cannot change your own role"' : '';
+        const deactAttr = isSelf ? 'disabled title="Cannot deactivate yourself"' : (!u.is_active ? 'disabled' : '');
+        
+        const statusBadge = u.is_active 
+          ? `<span class="inline-flex items-center gap-1.5 bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full text-xs font-bold"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Active</span>`
+          : `<span class="inline-flex items-center gap-1.5 bg-surface-container-high text-outline px-2.5 py-0.5 rounded-full text-xs font-bold"><span class="w-1.5 h-1.5 bg-outline rounded-full"></span>Inactive</span>`;
+
+        const actDeactButton = u.is_active
+          ? `<button class="text-error font-label-caps hover:underline transition-all cursor-pointer ${isSelf ? 'opacity-50 cursor-not-allowed' : ''}" onclick="confirmDeactivateUser('${u.id}', '${escAttr(u.username)}')" ${deactAttr}>Deactivate</button>`
+          : `<button class="text-primary font-label-caps hover:underline transition-all cursor-pointer" disabled>Deactivated</button>`;
+          
+        return `
+          <tr class="hover:bg-surface-container transition-colors">
+            <td class="px-lg py-md">
+              <div class="flex flex-col">
+                <span class="font-semibold text-on-surface">${escHtml(u.username)}</span>
+                <span class="text-body-sm text-on-surface-variant">${escHtml(u.email)}</span>
+              </div>
+            </td>
+            <td class="px-lg py-md">
+              <select class="bg-transparent border-none focus:ring-0 text-body-sm font-medium text-on-surface-variant cursor-pointer"
+                onchange="changeRole('${u.id}', this.value)" ${selectAttr}>
+                <option value="user" ${u.role === 'user' ? 'selected' : ''}>Student</option>
+                <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+              </select>
+            </td>
+            <td class="px-lg py-md">
+              ${statusBadge}
+            </td>
+            <td class="px-lg py-md text-on-surface-variant text-body-sm">${fmtDateShort(u.created_at)}</td>
+            <td class="px-lg py-md text-right">
+              ${actDeactButton}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ── Role change ───────────────────────────────────────────────────────────
+    async function changeRole(userId, role) {
+      try {
+        await apiFetch(`/api/users/${userId}/role`, {
+          method: 'PUT',
+          body: JSON.stringify({ role }),
+        });
+        showToast(`Role updated to ${role}`, 'success');
+      } catch (err) {
+        showToast('Failed: ' + err.message, 'error');
+        loadAll(); // revert
+      }
+    }
+
+    // ── Confirm delete / deactivate ───────────────────────────────────────────
+    let _pendingAction = null;
+    function confirmDeleteProblem(id, title) {
+      document.getElementById('confirm-msg').textContent =
+        `Delete problem "${title}"? This will also delete all its test cases and submissions.`;
+      _pendingAction = () => deleteProblem(id);
+      openModal('confirm-modal');
+    }
+    function confirmDeactivateUser(id, username) {
+      document.getElementById('confirm-msg').textContent =
+        `Deactivate user "${username}"? They will no longer be able to log in.`;
+      _pendingAction = () => deactivateUser(id);
+      openModal('confirm-modal');
+    }
+    document.getElementById('confirm-yes-btn').addEventListener('click', async () => {
+      closeModal('confirm-modal');
+      if (_pendingAction) { await _pendingAction(); _pendingAction = null; }
     });
-    showToast(`Role updated to ${role}`, 'success');
-  } catch (err) {
-    showToast('Failed: ' + err.message, 'error');
-    loadAll(); // revert
-  }
-}
 
-// ── Confirm delete / deactivate ───────────────────────────────────────────
-let _pendingAction = null;
-function confirmDeleteProblem(id, title) {
-  document.getElementById('confirm-msg').textContent =
-    `Delete problem "${title}"? This will also delete all its test cases and submissions.`;
-  _pendingAction = () => deleteProblem(id);
-  openModal('confirm-modal');
-}
-function confirmDeactivateUser(id, username) {
-  document.getElementById('confirm-msg').textContent =
-    `Deactivate user "${username}"? They will no longer be able to log in.`;
-  _pendingAction = () => deactivateUser(id);
-  openModal('confirm-modal');
-}
-document.getElementById('confirm-yes-btn').addEventListener('click', async () => {
-  closeModal('confirm-modal');
-  if (_pendingAction) { await _pendingAction(); _pendingAction = null; }
-});
+    async function deleteProblem(id) {
+      try {
+        await apiFetch(`/api/problems/${id}`, { method: 'DELETE' });
+        showToast('Problem deleted', 'success');
+        _allProblems = _allProblems.filter(p => p.id !== id);
+        renderProblems(_allProblems);
+      } catch (err) {
+        showToast('Delete failed: ' + err.message, 'error');
+      }
+    }
+    async function deactivateUser(id) {
+      try {
+        await apiFetch(`/api/users/${id}`, { method: 'DELETE' });
+        showToast('User deactivated', 'success');
+        const u = _allUsers.find(u => u.id === id);
+        if (u) u.is_active = false;
+        renderUsers(_allUsers);
+      } catch (err) {
+        showToast('Failed: ' + err.message, 'error');
+      }
+    }
 
-async function deleteProblem(id) {
-  try {
-    await apiFetch(`/api/problems/${id}`, { method: 'DELETE' });
-    showToast('Problem deleted', 'success');
-    _allProblems = _allProblems.filter(p => p.id !== id);
-    renderProblems(_allProblems);
-  } catch (err) {
-    showToast('Delete failed: ' + err.message, 'error');
-  }
-}
-async function deactivateUser(id) {
-  try {
-    await apiFetch(`/api/users/${id}`, { method: 'DELETE' });
-    showToast('User deactivated', 'success');
-    const u = _allUsers.find(u => u.id === id);
-    if (u) u.is_active = false;
-    renderUsers(_allUsers);
-  } catch (err) {
-    showToast('Failed: ' + err.message, 'error');
-  }
-}
+    // ── Test cases for Add Problem ────────────────────────────────────────────
+    let tcCount = 0;
+    function addTestCase(inputVal = '', outputVal = '', sample = false) {
+      tcCount++;
+      const id = tcCount;
+      const div = document.createElement('div');
+      div.className = 'grid grid-cols-1 md:grid-cols-[1fr,1fr,auto] gap-md items-start bg-surface-container-lowest p-md rounded-lg border border-outline-variant/60';
+      div.id = `tc-${id}`;
+      div.innerHTML = `
+        <div class="space-y-xs">
+          <label class="font-label-caps text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Input</label>
+          <textarea class="w-full px-sm py-xs border border-outline-variant rounded bg-surface-container-lowest font-code-block text-body-sm tc-input" rows="2" placeholder="Input data..." spellcheck="false">${escHtml(inputVal)}</textarea>
+        </div>
+        <div class="space-y-xs">
+          <label class="font-label-caps text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Expected Output</label>
+          <textarea class="w-full px-sm py-xs border border-outline-variant rounded bg-surface-container-lowest font-code-block text-body-sm tc-output" rows="2" placeholder="Expected output..." spellcheck="false">${escHtml(outputVal)}</textarea>
+        </div>
+        <div class="flex flex-col items-center justify-center h-full pt-4">
+          <label class="flex items-center gap-2 cursor-pointer mb-2">
+            <input class="rounded text-primary focus:ring-primary tc-sample" type="checkbox" ${sample ? 'checked' : ''}/>
+            <span class="text-xs font-semibold text-on-surface-variant font-label-caps">Sample</span>
+          </label>
+          <button class="text-error hover:bg-error/10 p-1 rounded transition-colors cursor-pointer" type="button" onclick="document.getElementById('tc-${id}').remove()">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+      `;
+      document.getElementById('tc-list').appendChild(div);
+    }
+    document.getElementById('add-tc-btn').addEventListener('click', () => addTestCase());
+    // Start with one empty test case
+    addTestCase();
 
-// ── Test cases for Add Problem ────────────────────────────────────────────
-let tcCount = 0;
-function addTestCase(inputVal = '', outputVal = '', sample = false) {
-  tcCount++;
-  const id = tcCount;
-  const div = document.createElement('div');
-  div.className = 'tc-item';
-  div.id = `tc-${id}`;
-  div.innerHTML = `
-    <div>
-      <label class="form-label">Input</label>
-      <textarea class="form-control tc-input" rows="3" placeholder="Input data…" spellcheck="false">${escHtml(inputVal)}</textarea>
-    </div>
-    <div>
-      <label class="form-label">Expected Output</label>
-      <textarea class="form-control tc-output" rows="3" placeholder="Expected output…" spellcheck="false">${escHtml(outputVal)}</textarea>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:0.5rem;padding-top:1.6rem">
-      <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:var(--text-secondary);cursor:pointer">
-        <input type="checkbox" ${sample ? 'checked' : ''} class="tc-sample"> Sample
-      </label>
-      <button type="button" class="btn btn-danger btn-sm tc-remove" onclick="document.getElementById('tc-${id}').remove()">✕</button>
-    </div>
-  `;
-  document.getElementById('tc-list').appendChild(div);
-}
-document.getElementById('add-tc-btn').addEventListener('click', () => addTestCase());
-// Start with one empty test case
-addTestCase();
+    // ── Add Problem form submit ───────────────────────────────────────────────
+    document.getElementById('add-problem-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('create-problem-btn');
+      const originalContent = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-white inline-block mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Creating...</span>
+      `;
 
-// ── Add Problem form submit ───────────────────────────────────────────────
-document.getElementById('add-problem-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById('create-problem-btn');
-  btn.classList.add('loading'); btn.disabled = true;
+      // Collect test cases
+      const testCases = [];
+      document.querySelectorAll('#tc-list > div').forEach(item => {
+        const inp = item.querySelector('.tc-input').value.trim();
+        const out = item.querySelector('.tc-output').value.trim();
+        const isSample = item.querySelector('.tc-sample').checked;
+        if (inp || out) testCases.push({ input_data: inp, expected_output: out, is_sample: isSample });
+      });
 
-  // Collect test cases
-  const testCases = [];
-  document.querySelectorAll('#tc-list .tc-item').forEach(item => {
-    const inp = item.querySelector('.tc-input').value.trim();
-    const out = item.querySelector('.tc-output').value.trim();
-    const isSample = item.querySelector('.tc-sample').checked;
-    if (inp || out) testCases.push({ input_data: inp, expected_output: out, is_sample: isSample });
-  });
+      const body = {
+        title:         document.getElementById('p-title').value.trim(),
+        statement:     document.getElementById('p-statement').value.trim(),
+        input_format:  document.getElementById('p-input-format').value.trim() || null,
+        output_format: document.getElementById('p-output-format').value.trim() || null,
+        constraints:   document.getElementById('p-constraints').value.trim() || null,
+        difficulty:    parseInt(document.getElementById('p-difficulty').value),
+        time_limit:    parseFloat(document.getElementById('p-time-limit').value),
+        memory_limit:  parseInt(document.getElementById('p-memory').value),
+        test_cases:    testCases,
+      };
 
-  const body = {
-    title:         document.getElementById('p-title').value.trim(),
-    statement:     document.getElementById('p-statement').value.trim(),
-    input_format:  document.getElementById('p-input-format').value.trim() || null,
-    output_format: document.getElementById('p-output-format').value.trim() || null,
-    constraints:   document.getElementById('p-constraints').value.trim() || null,
-    difficulty:    parseInt(document.getElementById('p-difficulty').value),
-    time_limit:    parseFloat(document.getElementById('p-time-limit').value),
-    memory_limit:  parseInt(document.getElementById('p-memory').value),
-    test_cases:    testCases,
-  };
+      try {
+        const created = await apiFetch('/api/problems/', { method: 'POST', body: JSON.stringify(body) });
+        showToast(`Problem "${created.title}" created!`, 'success');
+        resetProblemForm();
+        _allProblems.unshift(created);
+        renderProblems(_allProblems);
+        switchTab('tab-problems');
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
+      }
+    });
 
-  try {
-    const created = await apiFetch('/api/problems/', { method: 'POST', body: JSON.stringify(body) });
-    showToast(`Problem "${created.title}" created!`, 'success');
-    resetProblemForm();
-    _allProblems.unshift(created);
-    renderProblems(_allProblems);
-    switchTab('tab-problems');
-  } catch (err) {
-    showToast('Error: ' + err.message, 'error');
-  } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
-  }
-});
+    function resetProblemForm() {
+      document.getElementById('add-problem-form').reset();
+      document.getElementById('tc-list').innerHTML = '';
+      tcCount = 0;
+      addTestCase();
+    }
 
-function resetProblemForm() {
-  document.getElementById('add-problem-form').reset();
-  document.getElementById('tc-list').innerHTML = '';
-  tcCount = 0;
-  addTestCase();
-}
+    // ── Search filter for Users ───────────────────────────────────────────────
+    document.getElementById('user-search-input')?.addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      const filtered = _allUsers.filter(u => u.username.toLowerCase().includes(q) || u.email.toLowerCase().includes(q));
+      renderUsers(filtered);
+    });
 
-// ── Helpers ───────────────────────────────────────────────────────────────
-function escHtml(s) {
-  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function escAttr(s) {
-  return String(s ?? '').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    function escHtml(s) {
+      return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+    function escAttr(s) {
+      return String(s ?? '').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
 
-// ── Init ──────────────────────────────────────────────────────────────────
-loadAll();
-</script>
+    // ── Init ──────────────────────────────────────────────────────────────────
+    loadAll();
+  </script>
 </body>
 </html>

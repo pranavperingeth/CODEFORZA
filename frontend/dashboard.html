@@ -1,195 +1,546 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Problems — College CP</title>
   <meta name="description" content="Browse and solve competitive programming problems.">
-  <link rel="stylesheet" href="/static/styles.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;900&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  
+  <!-- Theme Configuration -->
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#131b2e",
+                    "on-background": "#191c1e",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "on-primary-fixed": "#4a1b00",
+                    "surface-container-high": "#e6e8ea",
+                    "on-secondary-fixed-variant": "#3f465c",
+                    "inverse-primary": "#ffb38e",
+                    "surface": "#f7f9fb",
+                    "secondary-container": "#dae2fd",
+                    "outline-variant": "#c3c6d7",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-fixed-dim": "#bec6e0",
+                    "secondary": "#565e74",
+                    "on-secondary-container": "#5c647a",
+                    "primary-fixed-dim": "#ffccbc",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#dae2fd",
+                    "on-tertiary-fixed": "#0b1c30",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "background": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#5e6e85",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-container": "#eceef0",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary": "#46566c",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#737686",
+                    "surface-dim": "#d8dadc",
+                    "primary-container": "#ea580c",
+                    "on-primary-fixed-variant": "#c2410c",
+                    "tertiary-fixed-dim": "#b7c8e1",
+                    "on-surface-variant": "#434655",
+                    "surface-tint": "#ea580c",
+                    "on-tertiary-container": "#e9f0ff",
+                    "on-surface": "#191c1e",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#ffffff",
+                    "tertiary-fixed": "#d3e4fe",
+                    "primary-fixed": "#ffede7",
+                    "error": "#ba1a1a",
+                    "primary": "#ea580c",
+                    "accent-orange": "#f97316"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "code-block": ["JetBrains Mono"],
+                    "title-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "code-block": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    } catch (_e) {}
+  </script>
+  
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    /* Custom scrollbar for data-dense feel */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .vibrant-glow {
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+    }
+    /* Navbar Active Styling */
+    .navbar-nav a.active {
+      color: #ea580c !important;
+      border-bottom: 2px solid #f97316 !important;
+      padding-bottom: 0.25rem !important;
+      font-weight: 700 !important;
+    }
+    /* User Pill Overrides for Light Theme */
+    #user-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #e6e8ea;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid #c3c6d7;
+      font-family: var(--font-label-caps, 'Inter');
+      font-size: 12px;
+      color: #191c1e;
+    }
+    #user-pill .avatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      background: #ea580c;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+    #user-pill .role-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+      background: #e0e3e5;
+      color: #434655;
+    }
+    #user-pill .role-tag.admin {
+      background: rgba(234, 88, 12, 0.15);
+      color: #ea580c;
+    }
+    /* Badges Styling */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: var(--font-label-caps, 'Inter');
+    }
+    .diff-easy {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+    }
+    .diff-medium {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+    }
+    .diff-hard {
+      background: var(--error-container, #ffdad6);
+      color: var(--error, #ba1a1a);
+    }
+    .verdict-AC {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+    .verdict-WA {
+      background: var(--error-container, #ffdad6);
+      color: var(--error, #ba1a1a);
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+    .verdict-TLE, .verdict-MLE {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+    .verdict-RE, .verdict-CE {
+      background: var(--tertiary-container, #5e6e85);
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+    /* Toast styles mapping app.js toast function onto light design */
+    #toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      border: 1px solid #e0e3e5;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      font-size: 0.875rem;
+      font-weight: 500;
+      max-width: 360px;
+      pointer-events: all;
+      animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #191c1e;
+    }
+    .toast.success { border-left: 4px solid #f97316; }
+    .toast.error   { border-left: 4px solid #ba1a1a; }
+    .toast.warning { border-left: 4px solid #f59e0b; }
+    .toast.info    { border-left: 4px solid #46566c; }
+    @keyframes toastIn {
+      from { transform: translateY(100%) scale(0.9); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+  </style>
 </head>
-<body>
+<body class="bg-surface text-on-surface font-body-md min-h-screen">
 
-<!-- ── Navbar ────────────────────────────────────────────────────────────── -->
-<nav class="navbar">
-  <a class="navbar-brand" href="/dashboard.html">
-    <div class="brand-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-      </svg>
-    </div>
-    <span class="brand-name">College CP</span>
-  </a>
-  <ul class="navbar-nav">
-    <li><a href="/dashboard.html" data-page="dashboard" class="active">Problems</a></li>
-    <li><a href="/admin.html" id="admin-nav-link" data-page="admin" style="display:none">Admin</a></li>
-  </ul>
-  <div class="navbar-spacer"></div>
-  <div id="user-pill" class="user-pill"></div>
-  <button class="btn btn-ghost btn-sm" id="logout-btn">Logout</button>
-</nav>
-
-<!-- ── Main content ───────────────────────────────────────────────────────── -->
-<div class="container page-content">
-
-  <!-- Stats -->
-  <div class="stats-grid" id="stats-grid">
-    <div class="stat-card">
-      <div class="stat-label">Total Problems</div>
-      <div class="stat-value accent" id="stat-total">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">My Submissions</div>
-      <div class="stat-value" id="stat-subs">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Solved</div>
-      <div class="stat-value success" id="stat-solved">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Logged in as</div>
-      <div class="stat-value" id="stat-user" style="font-size:1.1rem;margin-top:0.2rem">—</div>
-    </div>
-  </div>
-
-  <!-- Problem list -->
-  <div class="card">
-    <div class="card-header">
-      <span class="card-title">Problem Set</span>
-      <div class="search-wrap">
-        <span class="search-icon">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </span>
-        <input class="form-control" id="search-input" type="search"
-          placeholder="Search problems…" style="width:220px">
+  <!-- TopNavBar -->
+  <header class="bg-surface-container-lowest sticky top-0 z-50 border-b border-outline-variant shadow-sm h-16">
+    <div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-full">
+      <!-- Left: Brand & Nav Links -->
+      <div class="flex items-center gap-xl">
+        <a class="font-headline-lg text-headline-lg font-bold text-primary hover:opacity-90 transition-opacity" href="/dashboard.html">College CP</a>
+        <nav class="hidden md:flex items-center gap-lg navbar-nav">
+          <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200" href="/dashboard.html" data-page="dashboard">Problems</a>
+          <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200" href="/admin.html" id="admin-nav-link" data-page="admin" style="display:none">Admin</a>
+        </nav>
+      </div>
+      <!-- Right: User Identity & Actions -->
+      <div class="flex items-center gap-md">
+        <!-- Managed dynamically by app.js / script -->
+        <div id="user-pill" class="flex items-center gap-sm bg-surface-container-high px-md py-xs rounded-full border border-outline-variant"></div>
+        <button class="flex items-center gap-xs px-md py-sm bg-surface-container-low text-error hover:bg-error-container font-semibold rounded-lg transition-all active:scale-95 cursor-pointer" id="logout-btn">
+          <span class="material-symbols-outlined text-[20px]">logout</span>
+          <span class="font-label-caps font-bold">Logout</span>
+        </button>
       </div>
     </div>
-    <div class="table-wrap">
-      <table id="problems-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Difficulty</th>
-            <th>Time Limit</th>
-            <th>Memory</th>
+  </header>
+
+  <main class="max-w-container-max mx-auto px-gutter py-xl space-y-xl">
+    <!-- Stats Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+      <!-- Total Problems -->
+      <div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+        <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">Total Problems</p>
+        <div class="flex justify-between items-end">
+          <h3 class="font-headline-lg text-headline-lg font-bold" id="stat-total">—</h3>
+          <span class="material-symbols-outlined text-primary" data-icon="library_books">library_books</span>
+        </div>
+      </div>
+      <!-- My Submissions -->
+      <div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+        <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">My Submissions</p>
+        <div class="flex justify-between items-end">
+          <h3 class="font-headline-lg text-headline-lg font-bold" id="stat-subs">—</h3>
+          <span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+        </div>
+      </div>
+      <!-- Solved -->
+      <div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-[#10b981]">
+        <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">Solved</p>
+        <div class="flex justify-between items-end">
+          <h3 class="font-headline-lg text-headline-lg font-bold text-[#059669]" id="stat-solved">—</h3>
+          <span class="material-symbols-outlined text-[#059669]" data-icon="check_circle">check_circle</span>
+        </div>
+      </div>
+      <!-- Identity -->
+      <div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+        <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">Logged in as</p>
+        <div class="flex items-center gap-sm mt-xs">
+          <div class="w-8 h-8 bg-accent-orange/10 rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-accent-orange text-[18px]" data-icon="person">person</span>
+          </div>
+          <span class="font-title-md text-title-md truncate" id="stat-user">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem Set Card -->
+    <section class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+      <div class="px-lg py-md border-b border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-low">
+        <h2 class="font-title-md text-title-md flex items-center gap-sm">
+          <span class="material-symbols-outlined text-accent-orange" data-icon="format_list_bulleted">format_list_bulleted</span>
+          Problem Set
+        </h2>
+        <div class="relative w-full md:w-80">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+          <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-body-sm focus:ring-2 focus:ring-accent-orange focus:border-accent-orange transition-all outline-none" id="search-input" placeholder="Search problems..." type="text">
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-surface-container font-label-caps text-label-caps text-on-surface-variant">
+            <tr>
+              <th class="px-lg py-3 font-semibold">#</th>
+              <th class="px-lg py-3 font-semibold">Title</th>
+              <th class="px-lg py-3 font-semibold text-center">Difficulty</th>
+              <th class="px-lg py-3 font-semibold">Time Limit</th>
+              <th class="px-lg py-3 font-semibold">Memory</th>
+              <th class="px-lg py-3 font-semibold text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="text-body-sm divide-y divide-outline-variant/50" id="problems-tbody">
+            <tr>
+              <td colspan="6">
+                <div class="empty-state p-lg text-center">
+                  <div class="empty-state-icon text-xl">⏳</div>
+                  <h3 class="font-title-md font-bold mt-2">Loading problems…</h3>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- My Recent Submissions Card -->
+    <section class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+      <div class="px-lg py-md border-b border-outline-variant flex items-center justify-between bg-surface-container-low">
+        <h2 class="font-title-md text-title-md flex items-center gap-sm">
+          <span class="material-symbols-outlined text-accent-orange" data-icon="history">history</span>
+          My Recent Submissions
+        </h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-surface-container font-label-caps text-label-caps text-on-surface-variant">
+            <tr>
+              <th class="px-lg py-3 font-semibold">Problem</th>
+              <th class="px-lg py-3 font-semibold">Language</th>
+              <th class="px-lg py-3 font-semibold">Verdict</th>
+              <th class="px-lg py-3 font-semibold">Time</th>
+              <th class="px-lg py-3 font-semibold">Submitted</th>
+            </tr>
+          </thead>
+          <tbody class="text-body-sm divide-y divide-outline-variant/50" id="subs-tbody">
+            <tr>
+              <td colspan="5">
+                <div class="empty-state p-lg text-center">
+                  <div class="empty-state-icon text-xl">📭</div>
+                  <h3 class="font-title-md font-bold mt-2">No submissions yet</h3>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Identity Anchor -->
+  <footer class="bg-surface-container-low border-t border-outline-variant py-md mt-xl">
+    <div class="max-w-container-max mx-auto px-gutter flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps">
+      <p class="">© 2026 College CP Platform</p>
+      <div class="flex gap-lg">
+        <a class="hover:text-primary transition-colors" href="#">Documentation</a>
+        <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+  
+  <script src="/static/app.js"></script>
+  <script>
+    const user = requireAuth();
+    if (user) {
+      initNavbar('dashboard');
+      document.getElementById('stat-user').textContent = user.username;
+      
+      // Fix the user-pill dynamically to match the design
+      const pill = document.getElementById('user-pill');
+      if (pill) {
+        pill.className = "flex items-center gap-sm bg-surface-container-high px-md py-xs rounded-full border border-outline-variant";
+        pill.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-[#ea580c]/10 flex items-center justify-center text-[#ea580c] font-bold text-sm">
+            <span class="material-symbols-outlined text-[18px]">person</span>
+          </div>
+          <span class="font-label-caps text-label-caps text-on-surface font-semibold">${user.username}</span>
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase ${
+            user.role === 'admin' ? 'bg-[#ea580c]/10 text-[#ea580c]' : 'bg-surface-container-highest text-on-surface-variant'
+          }">${user.role}</span>
+        `;
+      }
+
+      loadData();
+    }
+
+    async function loadData() {
+      try {
+        const [problems, submissions] = await Promise.all([
+          apiFetch('/api/problems/'),
+          apiFetch('/api/judge/submissions'),
+        ]);
+
+        // Stats
+        document.getElementById('stat-total').textContent = problems?.length ?? 0;
+        document.getElementById('stat-subs').textContent  = submissions?.length ?? 0;
+        const solvedSet = new Set(
+          (submissions || [])
+            .filter(s => s.status === 'AC' && s.problem_id)
+            .map(s => s.problem_id)
+        );
+        document.getElementById('stat-solved').textContent = solvedSet.size;
+
+        // Problem table
+        renderProblems(problems || []);
+
+        // Submissions table
+        renderSubmissions(submissions || [], problems || []);
+
+      } catch (err) {
+        showToast('Failed to load data: ' + err.message, 'error');
+      }
+    }
+
+    let _allProblems = [];
+    function renderProblems(problems) {
+      _allProblems = problems;
+      const tbody = document.getElementById('problems-tbody');
+      if (!problems.length) {
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state p-lg text-center">
+          <div class="empty-state-icon text-xl">📋</div>
+          <h3 class="font-title-md font-bold mt-2">No problems yet</h3>
+          <p class="text-body-sm text-on-surface-variant">Ask an admin to add problems.</p>
+        </div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = problems.map((p, i) => `
+        <tr class="hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="window.location='/problem.html?id=${p.id}'">
+          <td class="px-lg py-4 font-code-block">${i + 1}</td>
+          <td class="px-lg py-4 font-semibold text-primary hover:underline">${escHtml(p.title)}</td>
+          <td class="px-lg py-4 text-center">${diffBadge(p.difficulty)}</td>
+          <td class="px-lg py-4 font-code-block">${p.time_limit}s</td>
+          <td class="px-lg py-4 font-code-block">${p.memory_limit} MB</td>
+          <td class="px-lg py-4 text-right">
+            <button class="bg-accent-orange hover:bg-[#ea580c] text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-colors shadow-sm active:scale-95" onclick="event.stopPropagation(); window.location='/problem.html?id=${p.id}'">Solve</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderSubmissions(subs, problems) {
+      const pMap = Object.fromEntries((problems || []).map(p => [p.id, p]));
+      const tbody = document.getElementById('subs-tbody');
+      if (!subs.length) return;
+      tbody.innerHTML = subs.slice(0, 15).map(s => {
+        const probTitle = s.problem_id ? (pMap[s.problem_id]?.title || `Problem ${s.problem_id}`) : 'Playground';
+        const probLink = s.problem_id ? `<a href="/problem.html?id=${s.problem_id}" class="hover:underline font-semibold text-primary" onclick="event.stopPropagation()">${escHtml(probTitle)}</a>` : `<span class="text-on-surface-variant">Playground</span>`;
+        return `
+          <tr class="hover:bg-surface-container-low transition-colors">
+            <td class="px-lg py-4">${probLink}</td>
+            <td class="px-lg py-4 font-code-block text-on-surface-variant">${s.language}</td>
+            <td class="px-lg py-4">${verdictBadge(s.status)}</td>
+            <td class="px-lg py-4 font-code-block text-on-surface-variant">${fmtTime(s.execution_time)}</td>
+            <td class="px-lg py-4 text-on-surface-variant text-[13px]">${fmtDate(s.created_at)}</td>
           </tr>
-        </thead>
-        <tbody id="problems-tbody">
-          <tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading problems…</h3></div></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+        `;
+      }).join('');
+    }
 
-</div>
+    // Search
+    document.getElementById('search-input').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      const filtered = _allProblems.filter(p => p.title.toLowerCase().includes(q));
+      renderProblems(filtered);
+    });
 
-<!-- ── My Submissions ─────────────────────────────────────────────────────── -->
-<div class="container" style="margin-top:1.5rem; padding-bottom:3rem">
-  <div class="card">
-    <div class="card-header">
-      <span class="card-title">My Recent Submissions</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Problem</th><th>Language</th><th>Verdict</th><th>Time</th><th>Submitted</th></tr>
-        </thead>
-        <tbody id="subs-tbody">
-          <tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">📭</div><h3>No submissions yet</h3></div></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+    // Search wrapper scale effect
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('focus', () => {
+        searchInput.parentElement.classList.add('scale-[1.02]');
+        searchInput.parentElement.style.transition = 'transform 0.2s ease-in-out';
+    });
+    searchInput.addEventListener('blur', () => {
+        searchInput.parentElement.classList.remove('scale-[1.02]');
+    });
 
-<div id="toast-container"></div>
-<script src="/static/app.js"></script>
-<script>
-const user = requireAuth();
-if (user) {
-  initNavbar('dashboard');
-  document.getElementById('stat-user').textContent = user.username;
-  loadData();
-}
-
-async function loadData() {
-  try {
-    const [problems, submissions] = await Promise.all([
-      apiFetch('/api/problems/'),
-      apiFetch('/api/judge/submissions'),
-    ]);
-
-    // Stats
-    document.getElementById('stat-total').textContent = problems?.length ?? 0;
-    document.getElementById('stat-subs').textContent  = submissions?.length ?? 0;
-    const solvedSet = new Set(
-      (submissions || [])
-        .filter(s => s.status === 'AC' && s.problem_id)
-        .map(s => s.problem_id)
-    );
-    document.getElementById('stat-solved').textContent = solvedSet.size;
-
-    // Problem table
-    renderProblems(problems || []);
-
-    // Submissions table
-    renderSubmissions(submissions || [], problems || []);
-
-  } catch (err) {
-    showToast('Failed to load data: ' + err.message, 'error');
-  }
-}
-
-let _allProblems = [];
-function renderProblems(problems) {
-  _allProblems = problems;
-  const tbody = document.getElementById('problems-tbody');
-  if (!problems.length) {
-    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state">
-      <div class="empty-state-icon">📋</div>
-      <h3>No problems yet</h3>
-      <p>Ask an admin to add problems.</p>
-    </div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = problems.map((p, i) => `
-    <tr style="cursor:pointer" onclick="window.location='/problem.html?id=${p.id}'">
-      <td style="color:var(--text-muted);font-family:var(--font-code)">${i + 1}</td>
-      <td><a href="/problem.html?id=${p.id}" style="color:var(--text-primary);font-weight:600" onclick="event.stopPropagation()">${escHtml(p.title)}</a></td>
-      <td>${diffBadge(p.difficulty)}</td>
-      <td style="font-family:var(--font-code);font-size:0.82rem">${p.time_limit}s</td>
-      <td style="font-family:var(--font-code);font-size:0.82rem">${p.memory_limit} MB</td>
-    </tr>
-  `).join('');
-}
-
-function renderSubmissions(subs, problems) {
-  const pMap = Object.fromEntries((problems || []).map(p => [p.id, p]));
-  const tbody = document.getElementById('subs-tbody');
-  if (!subs.length) return;
-  tbody.innerHTML = subs.slice(0, 15).map(s => `
-    <tr>
-      <td>${s.problem_id ? `<a href="/problem.html?id=${s.problem_id}">${escHtml(pMap[s.problem_id]?.title || '…')}</a>` : '<span style="color:var(--text-muted)">Playground</span>'}</td>
-      <td><span style="font-family:var(--font-code);font-size:0.82rem">${s.language}</span></td>
-      <td>${verdictBadge(s.status)}</td>
-      <td style="font-family:var(--font-code);font-size:0.82rem">${fmtTime(s.execution_time)}</td>
-      <td style="color:var(--text-muted);font-size:0.82rem">${fmtDate(s.created_at)}</td>
-    </tr>
-  `).join('');
-}
-
-// Search
-document.getElementById('search-input').addEventListener('input', function () {
-  const q = this.value.toLowerCase();
-  const filtered = _allProblems.filter(p => p.title.toLowerCase().includes(q));
-  renderProblems(filtered);
-});
-
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-</script>
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+  </script>
 </body>
 </html>

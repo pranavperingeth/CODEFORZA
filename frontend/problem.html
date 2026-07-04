@@ -1,117 +1,506 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Problem — College CP</title>
-  <meta name="description" content="Read the problem statement and submit your solution.">
-  <link rel="stylesheet" href="/static/styles.css">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Problem Solving | College CP</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap"
+    rel="stylesheet">
+
+  <!-- Material Symbols -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+
   <!-- Monaco Editor loader (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Monaco Container */
+    #monaco-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+    }
+
+    /* IO Tabs & Panes */
+    .io-tab {
+      padding: 0.5rem 1rem;
+      font-family: var(--font-label-caps, 'Inter');
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .io-tab:hover {
+      color: #ffffff;
+    }
+
+    .io-tab.active {
+      color: #ffffff;
+      border-bottom-color: #ea580c;
+    }
+
+    .io-pane {
+      display: none;
+      height: 100%;
+      width: 100%;
+    }
+
+    .io-pane.active {
+      display: block;
+    }
+
+    /* Navbar Active Underline Styling */
+    .navbar-nav a.active {
+      color: #ea580c !important;
+      border-bottom: 2px solid #f97316 !important;
+      padding-bottom: 0.25rem !important;
+      font-weight: 700 !important;
+    }
+
+    /* User Pill Overrides for Light Theme */
+    #user-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #e6e8ea;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid #c3c6d7;
+      font-family: var(--font-label-caps, 'Inter');
+      font-size: 12px;
+      color: #191c1e;
+    }
+
+    #user-pill .avatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      background: #ea580c;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    #user-pill .role-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+      background: #e0e3e5;
+      color: #434655;
+    }
+
+    #user-pill .role-tag.admin {
+      background: rgba(234, 88, 12, 0.15);
+      color: #ea580c;
+    }
+
+    /* Badges Styling */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: var(--font-label-caps, 'Inter');
+    }
+
+    .diff-easy {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+    }
+
+    .diff-medium {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+    }
+
+    .diff-hard {
+      background: var(--error-container, #ffdad6);
+      color: var(--error, #ba1a1a);
+    }
+
+    .verdict-AC {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+
+    .verdict-WA {
+      background: var(--error-container, #ffdad6);
+      color: var(--error, #ba1a1a);
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+
+    .verdict-TLE,
+    .verdict-MLE {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+
+    .verdict-RE,
+    .verdict-CE {
+      background: var(--tertiary-container, #5e6e85);
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 0.125rem 0.375rem;
+      font-size: 11px;
+    }
+
+    /* Toast styles mapping app.js toast function onto light design */
+    #toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      border: 1px solid #e0e3e5;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      font-size: 0.875rem;
+      font-weight: 500;
+      max-width: 360px;
+      pointer-events: all;
+      animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #191c1e;
+    }
+
+    .toast.success {
+      border-left: 4px solid #ea580c;
+    }
+
+    .toast.error {
+      border-left: 4px solid #ba1a1a;
+    }
+
+    .toast.warning {
+      border-left: 4px solid #f59e0b;
+    }
+
+    .toast.info {
+      border-left: 4px solid #46566c;
+    }
+
+    @keyframes toastIn {
+      from {
+        transform: translateY(100%) scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "surface-container-highest": "#e0e3e5",
+              "on-background": "#191c1e",
+              "on-secondary-container": "#5c647a",
+              "surface-variant": "#e0e3e5",
+              "on-tertiary-fixed-variant": "#38485d",
+              "on-primary-container": "#ffffff",
+              "on-primary-fixed": "#4a1b00",
+              "inverse-surface": "#2d3133",
+              "tertiary-fixed": "#d3e4fe",
+              "background": "#f7f9fb",
+              "on-tertiary-container": "#e9f0ff",
+              "secondary-fixed-dim": "#bec6e0",
+              "on-surface-variant": "#434655",
+              "on-tertiary": "#ffffff",
+              "on-error-container": "#93000a",
+              "surface-container-high": "#e6e8ea",
+              "outline-variant": "#c3c6d7",
+              "secondary-fixed": "#dae2fd",
+              "on-tertiary-fixed": "#0b1c30",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-container": "#5e6e85",
+              "surface-tint": "#ea580c",
+              "on-secondary-fixed-variant": "#3f465c",
+              "outline": "#737686",
+              "surface-dim": "#d8dadc",
+              "tertiary-fixed-dim": "#b7c8e1",
+              "on-secondary": "#ffffff",
+              "secondary": "#565e74",
+              "on-secondary-fixed": "#131b2e",
+              "on-primary": "#ffffff",
+              "tertiary": "#46566c",
+              "inverse-primary": "#ffb38e",
+              "surface-container": "#eceef0",
+              "primary-fixed": "#ffede7",
+              "primary": "#ea580c",
+              "on-primary-fixed-variant": "#c2410c",
+              "error": "#ba1a1a",
+              "on-surface": "#191c1e",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff1f3",
+              "error-container": "#ffdad6",
+              "primary-fixed-dim": "#ffccbc",
+              "secondary-container": "#dae2fd",
+              "surface": "#f7f9fb",
+              "surface-bright": "#f7f9fb",
+              "surface-container-low": "#f2f4f6",
+              "primary-container": "#ea580c",
+              "brand-accent": "#f97316"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "gutter": "24px",
+              "sm": "8px",
+              "container-max": "1280px",
+              "lg": "24px",
+              "xs": "4px",
+              "base": "4px",
+              "md": "16px",
+              "xl": "40px"
+            },
+            "fontFamily": {
+              "label-caps": ["Inter"],
+              "headline-lg": ["Hanken Grotesk"],
+              "code-block": ["JetBrains Mono"],
+              "title-md": ["Hanken Grotesk"],
+              "headline-lg-mobile": ["Hanken Grotesk"],
+              "display-lg": ["Hanken Grotesk"],
+              "body-sm": ["Inter"],
+              "body-md": ["Inter"]
+            },
+            "fontSize": {
+              "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+              "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+              "code-block": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+              "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+              "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+              "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+              "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+              "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+            }
+          }
+        }
+      }
+    } catch (_e) { }
+  </script>
 </head>
-<body>
 
-<!-- ── Navbar ────────────────────────────────────────────────────────────── -->
-<nav class="navbar">
-  <a class="navbar-brand" href="/dashboard.html">
-    <div class="brand-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-      </svg>
-    </div>
-    <span class="brand-name">College CP</span>
-  </a>
-  <ul class="navbar-nav">
-    <li><a href="/dashboard.html" data-page="dashboard">Problems</a></li>
-    <li><a href="/admin.html" id="admin-nav-link" data-page="admin" style="display:none">Admin</a></li>
-  </ul>
-  <div class="navbar-spacer"></div>
-  <div id="user-pill" class="user-pill"></div>
-  <button class="btn btn-ghost btn-sm" id="logout-btn">Logout</button>
-</nav>
+<body class="bg-background text-on-surface font-body-md overflow-hidden h-screen flex flex-col">
 
-<!-- ── Judge layout ───────────────────────────────────────────────────────── -->
-<div class="judge-page">
-  <div class="judge-layout">
-
-    <!-- ── LEFT: Problem statement ──────────────────────────────────────── -->
-    <div class="problem-panel" id="problem-panel">
-      <div style="color:var(--text-muted);padding:2rem;text-align:center">Loading problem…</div>
-    </div>
-
-    <!-- ── RIGHT: Editor + IO ───────────────────────────────────────────── -->
-    <div class="editor-panel">
-
-      <!-- Toolbar -->
-      <div class="editor-toolbar">
-        <select class="form-control" id="lang-select">
-          <option value="cpp">C++ 17</option>
-          <option value="c">C</option>
-          <option value="python">Python 3</option>
-          <option value="java">Java</option>
-        </select>
-        <div class="spacer"></div>
-        <button class="btn btn-ghost btn-sm" id="run-btn" title="Run with custom input (Ctrl+Enter)">
-          ▶ Run
-        </button>
-        <button class="btn btn-success btn-sm" id="submit-btn" title="Submit to judge">
-          ⬆ Submit
+  <!-- TopNavBar -->
+  <header class="bg-surface-container-lowest sticky top-0 z-50 border-b border-outline-variant shadow-sm h-16">
+    <div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-full">
+      <!-- Left: Brand & Nav Links -->
+      <div class="flex items-center gap-xl">
+        <a class="font-headline-lg text-headline-lg font-bold text-primary hover:opacity-90 transition-opacity"
+          href="/dashboard.html">College CP</a>
+        <nav class="hidden md:flex items-center gap-lg navbar-nav">
+          <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200"
+            href="/dashboard.html" data-page="dashboard">Problems</a>
+          <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200"
+            href="/admin.html" id="admin-nav-link" data-page="admin" style="display:none">Admin</a>
+        </nav>
+      </div>
+      <!-- Right: User Identity & Actions -->
+      <div class="flex items-center gap-md">
+        <!-- Managed dynamically by app.js / script -->
+        <div id="user-pill"
+          class="flex items-center gap-sm bg-surface-container-high px-md py-xs rounded-full border border-outline-variant">
+        </div>
+        <button
+          class="flex items-center gap-xs px-md py-sm bg-surface-container-low text-error hover:bg-error-container font-semibold rounded-lg transition-all active:scale-95 cursor-pointer"
+          id="logout-btn">
+          <span class="material-symbols-outlined text-[20px]">logout</span>
+          <span class="font-label-caps font-bold">Logout</span>
         </button>
       </div>
+    </div>
+  </header>
 
-      <!-- Monaco editor -->
-      <div class="monaco-container" id="monaco-container"></div>
+  <!-- Main Split-Screen Content -->
+  <main class="flex-1 flex overflow-hidden">
+    <!-- LEFT PANEL: Problem Details -->
+    <section
+      class="w-1/2 h-full bg-surface-container-lowest border-r border-outline-variant overflow-y-auto hide-scrollbar"
+      id="problem-panel">
+      <div style="color:var(--text-muted);padding:2rem;text-align:center">Loading problem…</div>
+    </section>
 
-      <!-- IO section -->
-      <div class="io-section">
-        <div class="io-tabs">
+    <!-- RIGHT PANEL: Dark IDE -->
+    <section class="w-1/2 h-full bg-[#0f172a] flex flex-col">
+      <!-- IDE Toolbar -->
+      <div class="h-14 bg-[#1e293b] border-b border-slate-700 flex items-center justify-between px-md shrink-0">
+        <div class="flex items-center gap-md">
+          <select
+            class="bg-[#334155] text-slate-200 border-none rounded-lg text-body-sm font-label-caps px-md py-1.5 focus:ring-2 focus:ring-primary-container outline-none appearance-none cursor-pointer"
+            id="lang-select">
+            <option value="cpp">C++ 17</option>
+            <option value="c">C</option>
+            <option value="python">Python 3</option>
+            <option value="java">Java</option>
+          </select>
+          <button class="text-slate-400 hover:text-white transition-colors cursor-pointer" title="Settings">
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-sm">
+          <button
+            class="bg-slate-700 hover:bg-slate-600 text-white font-label-caps text-label-caps px-lg py-2 rounded-lg flex items-center gap-xs transition-all active:scale-95 cursor-pointer"
+            id="run-btn" title="Run with custom input (Ctrl+Enter)">
+            <span class="material-symbols-outlined text-sm">play_arrow</span>
+            Run
+          </button>
+          <button
+            class="bg-[#10b981] hover:bg-[#059669] text-white font-label-caps text-label-caps px-xl py-2 rounded-lg flex items-center gap-xs transition-all active:scale-95 cursor-pointer"
+            id="submit-btn" title="Submit to judge">
+            <span class="material-symbols-outlined text-sm">publish</span>
+            Submit
+          </button>
+        </div>
+      </div>
+      <!-- IDE Editor Area -->
+      <div class="flex-1 overflow-hidden relative">
+        <div class="absolute inset-0" id="monaco-container"></div>
+      </div>
+      <!-- IO Section -->
+      <div class="h-64 bg-[#1e293b] border-t border-slate-700 flex flex-col shrink-0">
+        <!-- Tabs -->
+        <div class="flex items-center px-md border-b border-slate-700 bg-[#0f172a]/50">
           <button class="io-tab active" data-tab="stdin-pane">Input</button>
           <button class="io-tab" data-tab="stdout-pane">Output</button>
           <button class="io-tab" data-tab="stderr-pane">Errors</button>
           <button class="io-tab" data-tab="history-pane">History</button>
         </div>
-        <div class="io-pane active" id="stdin-pane">
-          <textarea class="io-pre" id="stdin-input" placeholder="Custom input (stdin)…" spellcheck="false"></textarea>
+        <!-- Tab Panes -->
+        <div class="flex-1 overflow-hidden relative bg-[#0f172a]">
+          <div class="io-pane active p-md h-full w-full" id="stdin-pane">
+            <textarea
+              class="w-full h-full bg-[#0f172a] border border-slate-600 rounded-lg p-md font-code-block text-code-block text-slate-300 focus:ring-1 focus:ring-primary-container focus:border-primary-container outline-none resize-none"
+              id="stdin-input" placeholder="Enter test case input here..."></textarea>
+          </div>
+          <div class="io-pane p-md h-full w-full overflow-y-auto" id="stdout-pane">
+            <pre class="font-code-block text-code-block text-slate-300 whitespace-pre-wrap"
+              id="stdout-out">Run your code to see output.</pre>
+          </div>
+          <div class="io-pane p-md h-full w-full overflow-y-auto" id="stderr-pane">
+            <pre class="font-code-block text-code-block text-error whitespace-pre-wrap" id="stderr-out"></pre>
+          </div>
+          <div class="io-pane p-md h-full w-full overflow-y-auto" id="history-pane">
+            <div id="history-list" class="font-code-block text-[13px] text-slate-300 divide-y divide-slate-700">
+              <div class="text-slate-400 p-2">No submissions yet</div>
+            </div>
+          </div>
         </div>
-        <div class="io-pane" id="stdout-pane">
-          <pre class="io-pre" id="stdout-out">Run your code to see output.</pre>
-        </div>
-        <div class="io-pane" id="stderr-pane">
-          <pre class="io-pre error-text" id="stderr-out"></pre>
-        </div>
-        <div class="io-pane" id="history-pane">
-          <div id="history-list" style="font-size:0.82rem"></div>
+        <!-- Verdict Bar -->
+        <div class="h-10 bg-[#0f172a] border-t border-slate-700 flex items-center justify-between px-md shrink-0">
+          <div class="flex items-center gap-md">
+            <span class="font-label-caps text-label-caps text-slate-400">Verdict:</span>
+            <span class="font-label-caps text-label-caps text-slate-500 italic" id="verdict-val">—</span>
+          </div>
+          <div class="text-slate-500 font-label-caps text-label-caps" id="verdict-time">
+            Time: 0.0s | Memory: —
+          </div>
         </div>
       </div>
+    </section>
+  </main>
 
-      <!-- Verdict bar -->
-      <div class="verdict-bar">
-        <span class="verdict-label">Verdict</span>
-        <span class="verdict-value" id="verdict-val">—</span>
-        <span class="verdict-time" id="verdict-time"></span>
-      </div>
+  <div id="toast-container"></div>
 
-    </div>
-  </div>
-</div>
+  <script src="/static/app.js"></script>
+  <script>
+    // ── Auth ──────────────────────────────────────────────────────────────────
+    const currentUser = requireAuth();
+    if (currentUser) {
+      initNavbar('dashboard');
 
-<div id="toast-container"></div>
-<script src="/static/app.js"></script>
-<script>
-// ── Auth ──────────────────────────────────────────────────────────────────
-const currentUser = requireAuth();
-if (currentUser) initNavbar();
+      // Fix the user-pill dynamically to match the design
+      const pill = document.getElementById('user-pill');
+      if (pill) {
+        pill.className = "flex items-center gap-sm bg-surface-container-high px-md py-xs rounded-full border border-outline-variant";
+        pill.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-[#ea580c]/10 flex items-center justify-center text-[#ea580c] font-bold text-sm">
+            <span class="material-symbols-outlined text-[18px]">person</span>
+          </div>
+          <span class="font-label-caps text-label-caps text-on-surface font-semibold">${currentUser.username}</span>
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase ${currentUser.role === 'admin' ? 'bg-[#ea580c]/10 text-[#ea580c]' : 'bg-surface-container-highest text-on-surface-variant'
+          }">${currentUser.role}</span>
+        `;
+      }
+    }
 
-// ── Problem ID from URL ───────────────────────────────────────────────────
-const params = new URLSearchParams(location.search);
-const problemId = params.get('id');
-if (!problemId) window.location.href = '/dashboard.html';
+    // ── Problem ID from URL ───────────────────────────────────────────────────
+    const params = new URLSearchParams(location.search);
+    const problemId = params.get('id');
+    if (!problemId) window.location.href = '/dashboard.html';
 
-let problem = null;
+    let problem = null;
 
-// ── Monaco Editor setup ───────────────────────────────────────────────────
-const DEFAULT_CODE = {
-  cpp: `#include <bits/stdc++.h>
+    // ── Monaco Editor setup ───────────────────────────────────────────────────
+    const DEFAULT_CODE = {
+      cpp: `#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
@@ -122,7 +511,7 @@ int main() {
     
     return 0;
 }`,
-  c: `#include <stdio.h>
+      c: `#include <stdio.h>
 #include <stdlib.h>
 
 int main() {
@@ -130,7 +519,7 @@ int main() {
     
     return 0;
 }`,
-  python: `import sys
+      python: `import sys
 input = sys.stdin.readline
 
 def main():
@@ -138,7 +527,7 @@ def main():
     pass
 
 main()`,
-  java: `import java.util.*;
+      java: `import java.util.*;
 import java.io.*;
 
 public class Main {
@@ -147,234 +536,289 @@ public class Main {
         // Write your solution here
     }
 }`,
-};
+    };
 
-const LANG_MAP = { cpp: 'cpp', c: 'c', python: 'python', java: 'java' };
+    const LANG_MAP = { cpp: 'cpp', c: 'c', python: 'python', java: 'java' };
 
-let editor = null;
-let currentLang = 'cpp';
+    let editor = null;
+    let currentLang = 'cpp';
 
-require.config({
-  paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }
-});
-
-require(['vs/editor/editor.main'], function () {
-  editor = monaco.editor.create(document.getElementById('monaco-container'), {
-    value: DEFAULT_CODE.cpp,
-    language: 'cpp',
-    theme: 'vs-dark',
-    fontSize: 14,
-    fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-    fontLigatures: true,
-    minimap: { enabled: false },
-    scrollBeyondLastLine: false,
-    automaticLayout: true,
-    lineNumbers: 'on',
-    renderLineHighlight: 'line',
-    wordWrap: 'off',
-    tabSize: 4,
-    insertSpaces: true,
-    bracketPairColorization: { enabled: true },
-    padding: { top: 12, bottom: 12 },
-    scrollbar: { verticalScrollbarSize: 6, horizontalScrollbarSize: 6 },
-  });
-
-  // Ctrl+Enter = Run
-  editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => runCode());
-});
-
-// Language selector
-document.getElementById('lang-select').addEventListener('change', function () {
-  currentLang = this.value;
-  if (editor) {
-    monaco.editor.setModelLanguage(editor.getModel(), LANG_MAP[currentLang]);
-    if (editor.getValue().trim() === '' || Object.values(DEFAULT_CODE).includes(editor.getValue())) {
-      editor.setValue(DEFAULT_CODE[currentLang]);
-    }
-  }
-});
-
-// ── IO tabs ───────────────────────────────────────────────────────────────
-document.querySelectorAll('.io-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.io-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.io-pane').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.tab).classList.add('active');
-  });
-});
-
-// ── Load problem ──────────────────────────────────────────────────────────
-async function loadProblem() {
-  try {
-    problem = await apiFetch(`/api/problems/${problemId}`);
-    renderProblem(problem);
-    document.title = `${problem.title} — College CP`;
-  } catch (err) {
-    document.getElementById('problem-panel').innerHTML =
-      `<div class="empty-state"><div class="empty-state-icon">❌</div><h3>Problem not found</h3><p>${err.message}</p></div>`;
-  }
-}
-
-function renderProblem(p) {
-  const samples = (p.sample_test_cases || []).filter(tc => tc.is_sample);
-  const samplesHtml = samples.length ? samples.map((tc, i) => `
-    <div style="margin-bottom:1rem">
-      <div class="sample-label">Sample Input ${i+1}</div>
-      <pre class="sample-block">${escHtml(tc.input_data)}</pre>
-      <div class="sample-label" style="margin-top:0.5rem">Sample Output ${i+1}</div>
-      <pre class="sample-block">${escHtml(tc.expected_output)}</pre>
-    </div>
-  `).join('') : '<p style="color:var(--text-muted)">No sample test cases provided.</p>';
-
-  // Pre-fill stdin with first sample input
-  if (samples[0]) {
-    document.getElementById('stdin-input').value = samples[0].input_data;
-  }
-
-  document.getElementById('problem-panel').innerHTML = `
-    <div class="problem-statement">
-      <h2>${escHtml(p.title)}</h2>
-      <div class="problem-meta">
-        <span class="problem-meta-item">🏆 ${diffBadge(p.difficulty)}</span>
-        <span class="problem-meta-item">⏱ ${p.time_limit}s</span>
-        <span class="problem-meta-item">💾 ${p.memory_limit} MB</span>
-      </div>
-
-      <div class="section-title">Problem Statement</div>
-      <p>${escHtml(p.statement).replace(/\n/g, '<br>')}</p>
-
-      ${p.input_format ? `<div class="section-title">Input Format</div><p>${escHtml(p.input_format).replace(/\n/g,'<br>')}</p>` : ''}
-      ${p.output_format ? `<div class="section-title">Output Format</div><p>${escHtml(p.output_format).replace(/\n/g,'<br>')}</p>` : ''}
-      ${p.constraints ? `<div class="section-title">Constraints</div><p><code>${escHtml(p.constraints).replace(/\n/g,'<br>')}</code></p>` : ''}
-
-      <div class="section-title">Sample Test Cases</div>
-      ${samplesHtml}
-    </div>
-  `;
-}
-
-// ── Run code (playground) ─────────────────────────────────────────────────
-async function runCode() {
-  if (!editor) { showToast('Editor not ready', 'warning'); return; }
-  const code = editor.getValue();
-  if (!code.trim()) { showToast('Code is empty', 'warning'); return; }
-
-  const runBtn = document.getElementById('run-btn');
-  runBtn.disabled = true;
-  runBtn.textContent = '⏳';
-  setVerdict('Running…', null, '');
-
-  // Switch to output tab
-  switchIoTab('stdout-pane');
-  document.getElementById('stdout-out').textContent = 'Running…';
-  document.getElementById('stderr-out').textContent = '';
-
-  try {
-    const result = await apiFetch('/api/judge/run', {
-      method: 'POST',
-      body: JSON.stringify({
-        language: currentLang,
-        code,
-        stdin: document.getElementById('stdin-input').value,
-      }),
+    require.config({
+      paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }
     });
 
-    document.getElementById('stdout-out').textContent = result.stdout || '(no output)';
-    document.getElementById('stderr-out').textContent = result.stderr || '';
-    setVerdict(result.status, result.execution_time, '');
+    require(['vs/editor/editor.main'], function () {
+      editor = monaco.editor.create(document.getElementById('monaco-container'), {
+        value: DEFAULT_CODE.cpp,
+        language: 'cpp',
+        theme: 'vs-dark',
+        fontSize: 14,
+        fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+        fontLigatures: true,
+        minimap: { enabled: false },
+        scrollBeyondLastLine: false,
+        automaticLayout: true,
+        lineNumbers: 'on',
+        renderLineHighlight: 'line',
+        wordWrap: 'off',
+        tabSize: 4,
+        insertSpaces: true,
+        bracketPairColorization: { enabled: true },
+        padding: { top: 12, bottom: 12 },
+        scrollbar: { verticalScrollbarSize: 6, horizontalScrollbarSize: 6 },
+      });
 
-    if (result.stderr) switchIoTab('stderr-pane');
-
-  } catch (err) {
-    showToast('Run failed: ' + err.message, 'error');
-    setVerdict('Error', null, '');
-  } finally {
-    runBtn.disabled = false;
-    runBtn.textContent = '▶ Run';
-  }
-}
-
-// ── Submit to judge ───────────────────────────────────────────────────────
-async function submitCode() {
-  if (!editor) { showToast('Editor not ready', 'warning'); return; }
-  if (!problem) { showToast('Problem not loaded', 'warning'); return; }
-  const code = editor.getValue();
-  if (!code.trim()) { showToast('Code is empty', 'warning'); return; }
-
-  const submitBtn = document.getElementById('submit-btn');
-  submitBtn.disabled = true;
-  submitBtn.textContent = '⏳ Judging…';
-  setVerdict('Running…', null, '');
-
-  try {
-    const result = await apiFetch('/api/judge/submit', {
-      method: 'POST',
-      body: JSON.stringify({ problem_id: problemId, language: currentLang, code }),
+      // Ctrl+Enter = Run
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => runCode());
     });
 
-    setVerdict(result.status, result.execution_time, '');
+    // Language selector
+    document.getElementById('lang-select').addEventListener('change', function () {
+      currentLang = this.value;
+      if (editor) {
+        monaco.editor.setModelLanguage(editor.getModel(), LANG_MAP[currentLang]);
+        if (editor.getValue().trim() === '' || Object.values(DEFAULT_CODE).includes(editor.getValue())) {
+          editor.setValue(DEFAULT_CODE[currentLang]);
+        }
+      }
+    });
 
-    if (result.status === 'AC') showToast('✅ Accepted!', 'success');
-    else showToast(`❌ ${result.status}`, 'error');
+    // ── IO tabs ───────────────────────────────────────────────────────────────
+    document.querySelectorAll('.io-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.io-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.io-pane').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
 
-    // Append to history
-    addToHistory(result);
-
-    if (result.stderr) {
-      document.getElementById('stderr-out').textContent = result.stderr;
-      switchIoTab('stderr-pane');
-    } else {
-      switchIoTab('history-pane');
+    // ── Load problem ──────────────────────────────────────────────────────────
+    async function loadProblem() {
+      try {
+        problem = await apiFetch(`/api/problems/${problemId}`);
+        renderProblem(problem);
+        document.title = `${problem.title} — College CP`;
+      } catch (err) {
+        document.getElementById('problem-panel').innerHTML =
+          `<div class="empty-state p-lg text-center"><div class="empty-state-icon text-xl">❌</div><h3 class="font-title-md font-bold mt-2">Problem not found</h3><p class="text-body-sm text-on-surface-variant mt-1">${err.message}</p></div>`;
+      }
     }
 
-  } catch (err) {
-    showToast('Submit failed: ' + err.message, 'error');
-    setVerdict('Error', null, '');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = '⬆ Submit';
-  }
-}
+    function renderProblem(p) {
+      const samples = (p.sample_test_cases || []).filter(tc => tc.is_sample);
+      const samplesHtml = samples.length ? samples.map((tc, i) => `
+        <div class="grid grid-cols-2 gap-md mb-md">
+          <div>
+            <span class="font-label-caps text-label-caps text-on-surface-variant mb-xs block">SAMPLE INPUT ${i + 1}</span>
+            <div class="bg-slate-900 text-slate-100 p-md rounded-lg font-code-block text-code-block whitespace-pre-wrap">${escHtml(tc.input_data)}</div>
+          </div>
+          <div>
+            <span class="font-label-caps text-label-caps text-on-surface-variant mb-xs block">SAMPLE OUTPUT ${i + 1}</span>
+            <div class="bg-slate-900 text-slate-100 p-md rounded-lg font-code-block text-code-block whitespace-pre-wrap">${escHtml(tc.expected_output)}</div>
+          </div>
+        </div>
+      `).join('') : '<p class="text-on-surface-variant">No sample test cases provided.</p>';
 
-// ── Helpers ───────────────────────────────────────────────────────────────
-function setVerdict(status, time, label) {
-  const vv = document.getElementById('verdict-val');
-  vv.innerHTML = verdictBadge(status);
-  document.getElementById('verdict-time').textContent = time != null ? fmtTime(time) : '';
-}
+      // Pre-fill stdin with first sample input
+      if (samples[0]) {
+        document.getElementById('stdin-input').value = samples[0].input_data;
+      }
 
-function switchIoTab(panelId) {
-  document.querySelectorAll('.io-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.io-pane').forEach(p => p.classList.remove('active'));
-  document.querySelector(`.io-tab[data-tab="${panelId}"]`)?.classList.add('active');
-  document.getElementById(panelId)?.classList.add('active');
-}
+      document.getElementById('problem-panel').innerHTML = `
+        <div class="p-xl max-w-3xl mx-auto space-y-xl">
+          <!-- Heading -->
+          <div class="mb-lg">
+            <h1 class="font-headline-lg text-headline-lg text-on-background mb-sm">${escHtml(p.title)}</h1>
+            <div class="flex items-center gap-md">
+              ${diffBadge(p.difficulty)}
+              <div class="flex items-center gap-xs text-on-surface-variant">
+                <span class="material-symbols-outlined text-sm">schedule</span>
+                <span class="font-body-sm text-body-sm">${p.time_limit}s</span>
+              </div>
+              <div class="flex items-center gap-xs text-on-surface-variant">
+                <span class="material-symbols-outlined text-sm">database</span>
+                <span class="font-body-sm text-body-sm">${p.memory_limit} MB</span>
+              </div>
+            </div>
+          </div>
 
-let historyEntries = [];
-function addToHistory(sub) {
-  historyEntries.unshift(sub);
-  const list = document.getElementById('history-list');
-  list.innerHTML = historyEntries.map(s => `
-    <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0;border-bottom:1px solid var(--border)">
-      ${verdictBadge(s.status)}
-      <span style="font-family:var(--font-code);color:var(--text-muted)">${s.language}</span>
-      <span style="color:var(--text-muted)">${fmtTime(s.execution_time)}</span>
-      <span style="color:var(--text-muted);margin-left:auto;font-size:0.78rem">${fmtDate(s.created_at)}</span>
-    </div>
-  `).join('');
-}
+          <!-- Problem Statement -->
+          <div>
+            <h2 class="font-title-md text-title-md text-primary mb-sm">Problem Statement</h2>
+            <p class="text-on-surface leading-relaxed">${escHtml(p.statement).replace(/\n/g, '<br>')}</p>
+          </div>
 
-function escHtml(s) {
-  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+          ${p.input_format ? `
+          <div>
+            <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-xs">INPUT FORMAT</h3>
+            <div class="bg-surface-container p-md rounded-lg font-code-block text-code-block text-on-surface">${escHtml(p.input_format).replace(/\n/g, '<br>')}</div>
+          </div>` : ''}
 
-// ── Wire up buttons ───────────────────────────────────────────────────────
-document.getElementById('run-btn').addEventListener('click', runCode);
-document.getElementById('submit-btn').addEventListener('click', submitCode);
+          ${p.output_format ? `
+          <div>
+            <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-xs">OUTPUT FORMAT</h3>
+            <div class="bg-surface-container p-md rounded-lg font-code-block text-code-block text-on-surface">${escHtml(p.output_format).replace(/\n/g, '<br>')}</div>
+          </div>` : ''}
 
-// ── Init ──────────────────────────────────────────────────────────────────
-loadProblem();
-</script>
+          ${p.constraints ? `
+          <div>
+            <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-xs">CONSTRAINTS</h3>
+            <div class="bg-surface-container p-md rounded-lg font-code-block text-code-block text-on-surface">${escHtml(p.constraints).replace(/\n/g, '<br>')}</div>
+          </div>` : ''}
+
+          <!-- Sample Test Cases -->
+          <div class="space-y-md">
+            <h2 class="font-title-md text-title-md text-primary">Sample Test Cases</h2>
+            ${samplesHtml}
+          </div>
+          
+          <div class="h-xl"></div>
+        </div>
+      `;
+    }
+
+    // ── Run code (playground) ─────────────────────────────────────────────────
+    async function runCode() {
+      if (!editor) { showToast('Editor not ready', 'warning'); return; }
+      const code = editor.getValue();
+      if (!code.trim()) { showToast('Code is empty', 'warning'); return; }
+
+      const runBtn = document.getElementById('run-btn');
+      const originalContent = runBtn.innerHTML;
+      runBtn.disabled = true;
+      runBtn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 text-white inline-block mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Running...</span>
+      `;
+      setVerdict('Running…', null, '');
+
+      // Switch to output tab
+      switchIoTab('stdout-pane');
+      document.getElementById('stdout-out').textContent = 'Running…';
+      document.getElementById('stderr-out').textContent = '';
+
+      try {
+        const result = await apiFetch('/api/judge/run', {
+          method: 'POST',
+          body: JSON.stringify({
+            language: currentLang,
+            code,
+            stdin: document.getElementById('stdin-input').value,
+          }),
+        });
+
+        document.getElementById('stdout-out').textContent = result.stdout || '(no output)';
+        document.getElementById('stderr-out').textContent = result.stderr || '';
+        setVerdict(result.status, result.execution_time, '');
+
+        if (result.stderr) switchIoTab('stderr-pane');
+
+      } catch (err) {
+        showToast('Run failed: ' + err.message, 'error');
+        setVerdict('Error', null, '');
+      } finally {
+        runBtn.disabled = false;
+        runBtn.innerHTML = originalContent;
+      }
+    }
+
+    // ── Submit to judge ───────────────────────────────────────────────────────
+    async function submitCode() {
+      if (!editor) { showToast('Editor not ready', 'warning'); return; }
+      if (!problem) { showToast('Problem not loaded', 'warning'); return; }
+      const code = editor.getValue();
+      if (!code.trim()) { showToast('Code is empty', 'warning'); return; }
+
+      const submitBtn = document.getElementById('submit-btn');
+      const originalContent = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 text-white inline-block mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Judging...</span>
+      `;
+      setVerdict('Running…', null, '');
+
+      try {
+        const result = await apiFetch('/api/judge/submit', {
+          method: 'POST',
+          body: JSON.stringify({ problem_id: problemId, language: currentLang, code }),
+        });
+
+        setVerdict(result.status, result.execution_time, '');
+
+        if (result.status === 'AC') showToast('✅ Accepted!', 'success');
+        else showToast(`❌ ${result.status}`, 'error');
+
+        // Append to history
+        addToHistory(result);
+
+        if (result.stderr) {
+          document.getElementById('stderr-out').textContent = result.stderr;
+          switchIoTab('stderr-pane');
+        } else {
+          switchIoTab('history-pane');
+        }
+
+      } catch (err) {
+        showToast('Submit failed: ' + err.message, 'error');
+        setVerdict('Error', null, '');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalContent;
+      }
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    function setVerdict(status, time, label) {
+      const vv = document.getElementById('verdict-val');
+      vv.innerHTML = verdictBadge(status);
+      const timeStr = time != null ? `Time: ${fmtTime(time)}` : 'Time: 0.0s';
+      document.getElementById('verdict-time').textContent = `${timeStr} | Memory: —`;
+    }
+
+    function switchIoTab(panelId) {
+      document.querySelectorAll('.io-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.io-pane').forEach(p => p.classList.remove('active'));
+      document.querySelector(`.io-tab[data-tab="${panelId}"]`)?.classList.add('active');
+      document.getElementById(panelId)?.classList.add('active');
+    }
+
+    let historyEntries = [];
+    function addToHistory(sub) {
+      historyEntries.unshift(sub);
+      const list = document.getElementById('history-list');
+      if (!historyEntries.length) {
+        list.innerHTML = '<div class="text-slate-400 p-2">No submissions yet</div>';
+        return;
+      }
+      list.innerHTML = historyEntries.map(s => `
+        <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0;border-bottom:1px solid #334155">
+          ${verdictBadge(s.status)}
+          <span style="font-family:var(--font-code);color:#94a3b8">${s.language}</span>
+          <span style="color:#94a3b8">${fmtTime(s.execution_time)}</span>
+          <span style="color:#64748b;margin-left:auto;font-size:0.78rem">${fmtDate(s.created_at)}</span>
+        </div>
+      `).join('');
+    }
+
+    function escHtml(s) {
+      return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ── Wire up buttons ───────────────────────────────────────────────────────
+    document.getElementById('run-btn').addEventListener('click', runCode);
+    document.getElementById('submit-btn').addEventListener('click', submitCode);
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    loadProblem();
+  </script>
 </body>
+
 </html>
