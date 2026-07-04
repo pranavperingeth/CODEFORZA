@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Problem — College CP</title>
+  <title>Problem — Codeforza</title>
   <meta name="description" content="Read the problem statement and submit your solution.">
   <link rel="stylesheet" href="/static/styles.css">
   <!-- Monaco Editor loader (CDN) -->
@@ -19,10 +19,11 @@
         <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
       </svg>
     </div>
-    <span class="brand-name">College CP</span>
+    <span class="brand-name">Codeforza</span>
   </a>
   <ul class="navbar-nav">
     <li><a href="/dashboard.html" data-page="dashboard">Problems</a></li>
+    <li><a href="/leaderboard.html" data-page="leaderboard">Leaderboard</a></li>
     <li><a href="/admin.html" id="admin-nav-link" data-page="admin" style="display:none">Admin</a></li>
   </ul>
   <div class="navbar-spacer"></div>
@@ -209,7 +210,7 @@ async function loadProblem() {
   try {
     problem = await apiFetch(`/api/problems/${problemId}`);
     renderProblem(problem);
-    document.title = `${problem.title} — College CP`;
+    document.title = `${problem.title} — Codeforza`;
   } catch (err) {
     document.getElementById('problem-panel').innerHTML =
       `<div class="empty-state"><div class="empty-state-icon">❌</div><h3>Problem not found</h3><p>${err.message}</p></div>`;

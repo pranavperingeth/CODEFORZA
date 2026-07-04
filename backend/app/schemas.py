@@ -217,3 +217,15 @@ class SubmissionOut(BaseModel):
     execution_time: Optional[float] = None
     created_at: datetime
     problem_id: Optional[UUID] = None
+
+
+# ── Rankings schemas ──────────────────────────────────────────────────────────
+
+class LeaderboardEntry(BaseModel):
+    """One row on the leaderboard."""
+    rank: int
+    user_id: UUID
+    username: str
+    problems_solved: int          # number of unique problems with AC
+    total_score: int              # sum of difficulty of each uniquely solved problem
+    last_ac_at: Optional[datetime] = None  # tie-break: earlier = better

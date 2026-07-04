@@ -26,6 +26,7 @@ from app.dependencies import get_current_user
 from app.routers.auth_router import router as auth_router
 from app.routers.judge_router import router as judge_router
 from app.routers.problems_router import router as problems_router
+from app.routers.rankings_router import router as rankings_router
 from app.routers.users_router import router as users_router
 
 # ── Path resolution ───────────────────────────────────────────────────────────
@@ -85,6 +86,7 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(problems_router)
 app.include_router(judge_router)
+app.include_router(rankings_router)
 
 
 # ── Frontend static serving ───────────────────────────────────────────────────
