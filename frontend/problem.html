@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Problem Solving | College CP</title>
+  <title>Problem — Codeforza</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -355,10 +355,12 @@
       <!-- Left: Brand & Nav Links -->
       <div class="flex items-center gap-xl">
         <a class="font-headline-lg text-headline-lg font-bold text-primary hover:opacity-90 transition-opacity"
-          href="/dashboard.html">College CP</a>
+          href="/dashboard.html">Codeforza</a>
         <nav class="hidden md:flex items-center gap-lg navbar-nav">
           <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200"
             href="/dashboard.html" data-page="dashboard">Problems</a>
+          <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200"
+            href="/leaderboard.html" data-page="leaderboard">Leaderboard</a>
           <a class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps font-medium cursor-pointer transition-colors duration-200"
             href="/admin.html" id="admin-nav-link" data-page="admin" style="display:none">Admin</a>
         </nav>
@@ -598,7 +600,7 @@ public class Main {
       try {
         problem = await apiFetch(`/api/problems/${problemId}`);
         renderProblem(problem);
-        document.title = `${problem.title} — College CP`;
+        document.title = `${problem.title} — Codeforza`;
       } catch (err) {
         document.getElementById('problem-panel').innerHTML =
           `<div class="empty-state p-lg text-center"><div class="empty-state-icon text-xl">❌</div><h3 class="font-title-md font-bold mt-2">Problem not found</h3><p class="text-body-sm text-on-surface-variant mt-1">${err.message}</p></div>`;
