@@ -1,109 +1,94 @@
-# 🏆 Codeforza — Competitive Programming Platform
+# 🏆 Codeforza — Elevating Competitive Programming 🚀
 
-A full-featured, competitive programming platform built for colleges. Write and run code directly in the browser using a VS Code-style editor, solve problems, compete with peers, and manage everything from an admin panel.
+Welcome to **Codeforza**, a full-featured, blazing-fast competitive programming platform built specifically for colleges and developer communities! 
+
+Imagine having your own private Codeforces—where you can write, run, and submit code directly in the browser via a **VS Code-style editor**, climb the global **Leaderboard**, and manage everything through a sleek **Admin Panel**. That's Codeforza! ✨
 
 ---
 
 ## 📸 Platform Overview
 
-| Page | Description |
+| 🌟 Feature | 📝 What it does |
 |---|---|
-| **Login / Register** | Secure auth with bcrypt-hashed passwords + JWT tokens. |
-| **Dashboard** | Problem list with difficulty badges, search, and your submission history. |
-| **Problem Page** | Side-by-side problem statement + Monaco Editor (VS Code-style) with Run & Submit. |
-| **Leaderboard** | Global ranking of all users based on unique problems solved. |
-| **Admin Panel** | Add problems with test cases, manage users, promote/deactivate accounts. |
+| **🔒 Secure Auth** | Bulletproof login/register with bcrypt-hashed passwords + JWT tokens. |
+| **📊 Dashboard** | Browse problems, check out difficulty badges, search instantly, and track your submission history! |
+| **💻 The Arena** | Side-by-side problem statements and a **Monaco Editor** (VS Code's engine). Run custom tests or submit for judgment! |
+| **🏆 Leaderboard** | Climb the ranks! Global standings based on unique problems solved. Who is the undisputed champion? |
+| **⚙️ Admin Panel** | The command center. Add new problems, inject secret test cases, and manage user roles with ease. |
 
 ---
 
 ## 🛠️ Architecture & Tech Stack
 
-Codeforza is designed with a clear separation of concerns, utilizing modern technologies for both the frontend and backend.
+Codeforza isn't just a toy—it's built with a clean separation of concerns, utilizing a modern and scalable stack.
 
-### Frontend Design Analysis
-The frontend has been overhauled to prioritize visual excellence, responsiveness, and maintainability.
-- **Tailwind CSS**: The UI is powered by Tailwind CSS (via CDN), allowing for rapid prototyping and a highly consistent, utility-first design system. This eliminates massive custom CSS files and ensures a unified design language.
-- **Typography & Icons**: Uses Google Fonts (`Inter` for UI readability, `Hanken Grotesk` for headings, and `JetBrains Mono` for code) alongside Material Symbols for a sleek, modern aesthetic.
-- **Component Consistency**: The design emphasizes structured spacing (`gap-md`, `p-xl`), subtle micro-animations (`transition-all`, hover states), and a clean card-based layout (`bg-surface-container`, shadow depths).
-- **Code Editor**: Integrated with **Monaco Editor** (the engine behind VS Code) for a professional-grade coding experience right in the browser.
+### 🎨 Frontend: Beautiful by Default
+The frontend was completely overhauled to prioritize visual excellence and a buttery-smooth user experience.
+- **Tailwind CSS 🌊**: Powered by Tailwind via CDN. It enables rapid prototyping and a beautiful, consistent, utility-first design system without the bloat of massive CSS files.
+- **Typography & Aesthetics ✨**: Beautifully crafted with Google Fonts (`Inter` for readability, `Hanken Grotesk` for punchy headings, and `JetBrains Mono` for the code editor).
+- **Sleek UI Components 🧩**: Enjoy structured spacing, subtle micro-animations on hover, and a premium card-based layout featuring gorgeous shadow depths.
+- **Monaco Editor ⌨️**: A professional-grade coding experience baked right into your browser.
 
-### Backend Design Analysis
-The backend is built for speed, security, and scalability.
-- **FastAPI (Python)**: Provides extremely fast execution, automatic OpenAPI documentation, and asynchronous capabilities.
-- **SQLAlchemy 2.0 & PostgreSQL**: A robust relational database setup. The ORM ensures safe parameterized queries (preventing SQL injection), while PostgreSQL handles complex joins efficiently (e.g., for calculating Leaderboard rankings on the fly).
-- **Security & Authentication**:
-  - Passwords are never stored in plaintext (hashed using `bcrypt` with 12 rounds).
-  - Stateless authentication using `JWT` (HS256).
-  - Rate limiting via `slowapi` prevents brute-force login attempts and registration spam.
-- **Code Execution Engine**: Sandboxed execution using Python's `subprocess` running in isolated temporary directories. Supports Python 3, C++ 17, C, and Java.
+### ⚡ Backend: Built for Speed & Security
+- **FastAPI (Python) 🚀**: Extremely fast execution, asynchronous capabilities, and automatic OpenAPI documentation out of the box.
+- **SQLAlchemy 2.0 & PostgreSQL 🐘**: A rock-solid database setup. Parameterized queries prevent SQL injection, while Postgres effortlessly handles the complex on-the-fly math required for the live Leaderboard.
+- **Ironclad Security 🛡️**: 
+  - Passwords? Never in plaintext (hashed via `bcrypt`, 12 rounds).
+  - Authentication? Completely stateless via `JWT` (HS256).
+  - Spam protection? Handled gracefully by `slowapi` rate limiting.
+- **The Judge Engine ⚖️**: Secure, sandboxed code execution using Python's `subprocess` in isolated temp directories. (Supports Python 3, C++ 17, C, and Java).
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 college-cp/
 │
 ├── README.md
 │
-├── backend/
-│   ├── requirements.txt        ← Python dependencies
-│   ├── .env                    ← Secrets (DB URL, JWT key) — never commit this
+├── backend/                  🔥 The FastAPI Engine
+│   ├── requirements.txt
+│   ├── .env                  ← Top secret config goes here
 │   └── app/
-│       ├── main.py             ← FastAPI app: middleware, routers, static serving
-│       ├── database.py         ← SQLAlchemy engine + get_db() dependency
-│       ├── models.py           ← ORM tables (users, problems, test_cases, submissions)
-│       ├── schemas.py          ← Pydantic validation schemas
-│       ├── auth.py             ← bcrypt hashing + JWT create/decode
-│       ├── dependencies.py     ← get_current_user + require_admin guards
-│       ├── executor.py         ← Sandboxed code runner
-│       └── routers/
-│           ├── auth_router.py      ← Auth endpoints
-│           ├── users_router.py     ← Admin user management
-│           ├── problems_router.py  ← Problem CRUD
-│           ├── judge_router.py     ← Code execution and submissions
-│           └── rankings_router.py  ← Global leaderboard calculation
+│       ├── main.py           ← The brain (middlewares, routers)
+│       ├── database.py       ← DB Connection
+│       ├── models.py         ← SQLAlchemy ORM models
+│       ├── schemas.py        ← Pydantic validation magic
+│       ├── auth.py           ← Hashing & JWT logic
+│       ├── executor.py       ← The Code Judge
+│       └── routers/          ← API Endpoints (Auth, Problems, Judge, Rankings)
 │
-└── frontend/
-    ├── index.html       ← Login page (Tailwind)
-    ├── register.html    ← Registration page (Tailwind)
-    ├── dashboard.html   ← Problem list (Tailwind)
-    ├── problem.html     ← Problem detail + Editor (Tailwind)
-    ├── admin.html       ← Admin panel (Tailwind)
-    ├── leaderboard.html ← Leaderboard ranking page
-    └── app.js           ← Shared JS logic (API fetching, auth state)
+└── frontend/                 ✨ The Tailwind UI
+    ├── index.html            ← Login (Entry Point)
+    ├── register.html         
+    ├── dashboard.html        ← Problem List
+    ├── problem.html          ← The Coding Arena
+    ├── admin.html            ← Command Center
+    ├── leaderboard.html      ← The Hall of Fame
+    └── app.js                ← Shared JS superpowers
 ```
 
 ---
 
-## ⚙️ Setup & Running Locally
+## 🚀 Setup & Running Locally
 
-### Step 1 — Install PostgreSQL
+Ready to launch Codeforza on your machine? Let's go!
 
-Make sure PostgreSQL is installed and running. Then create the database:
-
+### Step 1 — Spin up PostgreSQL 🐘
+Ensure Postgres is installed and running. Jump into your terminal:
 ```bash
 psql -U postgres -c "CREATE DATABASE college_cp;"
 ```
 
-### Step 2 — Configure environment variables
-
+### Step 2 — Configure Secrets 🤫
 ```bash
 cd backend
 cp .env.example .env
 ```
+Open `.env` and plug in your database credentials and secret keys!
 
-Open `.env` and configure your credentials:
-
-```env
-DATABASE_URL=postgresql://postgres:YOUR_POSTGRES_PASSWORD@localhost:5432/college_cp
-SECRET_KEY=bfd0f8d612a72748107d4a905e02d5b6fb6b4fe82afb0063dfe3b00c8a64a78d
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-```
-
-### Step 3 — Install Python dependencies
-
+### Step 3 — Install Dependencies 📦
 ```bash
 cd backend
 python3 -m venv venv
@@ -111,23 +96,16 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Step 4 — Run the server
-
+### Step 4 — Ignite the Server 🔥
 ```bash
-cd backend
-source venv/bin/activate
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
-
-### Step 5 — Open in browser
-Visit `http://localhost:8000` to see the app.
-API Docs available at `http://localhost:8000/api/docs`.
+Boom! 💥 The server will auto-create all database tables and serve the frontend at `http://localhost:8000`. API Docs are waiting for you at `http://localhost:8000/api/docs`.
 
 ---
 
-## 👑 Making Yourself an Admin
-
-All new registrations default to the `user` role. Run this SQL to promote yourself:
+## 👑 Claiming Your Admin Crown
+All new users start as standard players. Want the keys to the kingdom? Run this quick SQL command:
 
 ```bash
 psql -U postgres -d college_cp
@@ -136,26 +114,27 @@ psql -U postgres -d college_cp
 UPDATE users SET role = 'admin' WHERE email = 'your@email.com';
 \q
 ```
-*Note: If using macOS with Homebrew Postgres, use your Mac username instead of `postgres`.*
+*(Mac/Homebrew users: use your Mac username instead of `postgres`!)*
 
 ---
 
 ## 🔐 Security Overview
-
-- **Passwords**: Hashed with bcrypt (12 rounds).
-- **JWT tokens**: Signed with HS256. Invalid/expired tokens result in 401 Unauthorized.
-- **Admin API routes**: Protected server-side via FastAPI dependencies.
-- **Admin page HTML**: `/admin.html` is served only if the request has a valid admin JWT.
-- **Hidden test cases**: Test inputs/outputs are never sent to the browser.
-- **Rate limiting**: Login (5/min), Register (10/min) per IP.
+Codeforza takes security seriously:
+- **No Plaintext**: Passwords are mathematically crushed by `bcrypt`.
+- **JWT Protection**: Invalid tokens are instantly rejected (401 Unauthorized).
+- **Backend Guards**: The Admin API routes are protected *server-side* by FastAPI dependencies. You can't fake being an admin.
+- **Hidden Tests**: Test cases are judged in the dark. Inputs/outputs are *never* leaked to the browser.
+- **Rate Limiting**: Brute-force attacks are stopped in their tracks.
 
 ---
 
-## 💡 What to Build Next
+## 🔮 What's Next on the Roadmap?
+- [x] **Leaderboard** — Global rankings are LIVE! 🏆
+- [ ] **Contests** — High-stakes, timed coding battles. ⏱️
+- [ ] **Domain Restriction** — Exclusive access (e.g., `@nitc.ac.in` only). 🎓
+- [ ] **Player Profiles** — Show off your avatar, bio, and stats! 🧑‍💻
+- [ ] **Announcements** — Admin-curated news and problem editorials. 📰
+- [ ] **Dockerized Judge** — Containerized, ultra-secure code execution for the big leagues. 🐳
 
-- [x] **Leaderboard** — Global rankings by accepted problems.
-- [ ] **Contests** — Timed contests with specific problem sets.
-- [ ] **Domain Restriction** — Restrict registration to `@nitc.ac.in` emails only.
-- [ ] **Profiles** — User profiles with avatars and bios.
-- [ ] **Posts/Announcements** — Admin-created news and problem editorials.
-- [ ] **Docker Judge** — Isolated, secure code execution for production deployment.
+---
+*Built for the competitive spirit. Happy Coding!* 🎉
